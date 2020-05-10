@@ -1,7 +1,41 @@
 body {
   display: flex;
+  justify-content: space-between;
+  font-family: "Calibri";
+}
+#navbar {
+  border: 1px solid #000;
+  padding: 1em 0;
+}
+#navbar ul {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#navbar li {
+  padding: 10px;
+  border: 1px solid #000;
+  text-align: center;
+}
+a {
+  text-decoration: none;
 }
 
-#navbar > ul {
-  list-style-type: none;
+main {
+  width: 100%;
+  padding: 0 2em;
+}
+
+@media (min-width: 200px) {
+  body {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 500px) {
+  body {
+    flex-direction: row;
+  }
 }
