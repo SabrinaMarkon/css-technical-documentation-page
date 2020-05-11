@@ -27,25 +27,47 @@
       </nav>
       <main id="main-doc">
           <section class="main-section" id="hookRules">
-            <header>Important Rules to Remember about Hooks</header>
+            <header>Important Rules to Remember about React Hooks</header>
             <ul>
               <li>Hooks should never be called from loops, conditionals, or nested functions.</li>
               <li>Hooks should only be at the top level of your component.</li>
               <li>Hooks can only be called in React functional components (not classes).</li>
               <li>Hooks should never be called in regular functions (as opposed to React functional components).</li>
               <li>Hooks can be called from other hooks.</li>
+              <li>You can enforce these rules with <a href="https://reactjs.org/docs/hooks-rules.html#eslint-plugin" target="_blank">
+                ES Lint</a>.</li>
             </ul>
           </section>
         <section class="main-section" id="useState">
           <header>useState</header>
-          <p></p>
-          <p></p>
-          <code></code>
+          <p>React functional components use the <strong>useState()</strong> React hook to keep track of "stateful" values, or 
+          variable value changes that we need to keep track of in our application.</p>
+          <p>In the code below, you can see a typical example of a useState hook.</p>
+          <div class="codecontainer">
+            <code>
+              let initialState = 0;<br />
+              const [count, setCount] = useState(initialState);
+            </code>
+          </div>
+          <p>The hook, useState, is passed an optional initialState parameter, and is assigned to a destructured array that
+          tells us the stateful variable's name our program can use, along with a "set" function that our program can use to
+          update that variable's value.</p>
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li><strong>let initialState = 0</strong> is the optional starting value of the count variable.</li>
+            <li><strong>count</strong> is the name of the stateful value our program needs to read and update.</li>
+            <li><strong>setCount</strong> is the name of the declarative function we will call that will automatically
+               update the value of count for us to whatever we tell it to.</li>
           </ul>
+          <p>So, in our program, if want to increment count whenever we click a button, the onClick function would
+            call <strong>setCount(newCount)</strong> where newCount = ++count;</p>
+          </p>
+        </p>So for each stateful variable your program needs, the <strong>generalized</strong> 
+        format to set up the useState hook is:</p>
+        <div class="codecontainer">
+            <code>
+              const [state, setState] = useState(initialState);
+            </code>
+          </div>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
@@ -154,7 +176,10 @@
           <a href="https://www.telerik.com/kendo-react-ui/react-hooks-guide" target="_blank">
             https://www.telerik.com/kendo-react-ui/react-hooks-guide</a>
         </p>
-        <p class="reference"></p>
+        <p class="reference">ReactJS.org (n.d.). Hooks API Reference. Retrieved from
+          <a href="https://reactjs.org/docs/hooks-reference.html" target="_blank">
+            https://reactjs.org/docs/hooks-reference.html</a>
+        </p>
     </footer>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
