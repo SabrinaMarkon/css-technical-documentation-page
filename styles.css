@@ -1,21 +1,24 @@
 body {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: space-between;
-  font-family: "Calibri";
+  font-family: "Open Sans", "Calibri", "Arial", sans-serif;
   color: #393939;
 }
+#content {
+  display: flex;
+  justify-content: space-between;
+}
 #navbar {
-  min-width: 200px;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
-#navbar header {
-  font-size: 1.2em;
+header {
   padding: 0.6em;
   text-align: center;
+}
+#navbar header {
   border: 1px solid #393939;
 }
 #navbar ul {
@@ -39,14 +42,39 @@ main {
   width: 100%;
   padding: 0 2em;
 }
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+footer > header {
+  margin-bottom: 0.4em;
+}
+.reference {
+  margin: auto 1em 1em 1em;
+}
 
 @media (min-width: 200px) {
-  body {
+  #content {
     flex-direction: column;
+  }
+  header {
+    font-size: 1.2em;
   }
 }
 @media (min-width: 500px) {
-  body {
+  #content {
     flex-direction: row;
+  }
+  #navbar {
+    min-width: 200px;
+  }
+}
+@media (min-width: 760px) {
+  header {
+    font-size: 1.8em;
+  }
+  #navbar {
+    min-width: 300px;
   }
 }
