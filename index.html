@@ -61,16 +61,41 @@
           <p>So, in our program, if want to increment count whenever we click a button, the onClick function would
             call <strong>setCount(newCount)</strong> where newCount = ++count;</p>
           </p>
+          <p>Example of a functional component using useState to keep track of a counter:</p>
+          <div class="codecontainer">
+            <xmp>
+/* When the "Click Me" button is clicked, the onClick event fires
+ * and the incrementCount function is called that uses setCount to 
+ * increment the count variable. */
+
+import React, { useState } from 'react';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  const incrementCount = () => setCount(count + 1);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={incrementCount}>Click Me</button>
+    </div>
+  )
+}
+
+export default Counter;
+          </xmp>
+        </div>
         </p>So for each stateful variable your program needs, the <strong>generalized</strong> 
         format to set up the useState hook is:</p>
         <div class="codecontainer">
             <code>
               const [state, setState] = useState(initialState);
             </code>
-          </div>
+         </div>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
+          <p></p>
           <p></p>
           <p></p>
           <code></code>
