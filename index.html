@@ -49,7 +49,7 @@
               const [count, setCount] = useState(initialState);
             </code>
           </div>
-          <p>The hook, useState, is passed an optional initialState parameter, and is assigned to a destructured array that
+          <p>The useState hook is passed an optional initialState parameter, and is assigned to a destructured array that
           tells us the stateful variable's name our program can use, along with a "set" function that our program can use to
           update that variable's value.</p>
           <ul>
@@ -92,6 +92,23 @@ export default Counter;
               const [state, setState] = useState(initialState);
             </code>
          </div>
+        </section>
+        <section class="main-section" id="useRef">
+          <header>useRef</header>
+          <p>useRef is a hook that mutates the current value of a variable that we initialize with an initial value.
+          Its major difference to the useState hook is that it only updates the value of the variable, but does <strong>not</strong>
+          update state, so consequently does <strong>not</strong> cause a re-render either.</p>
+          <p>We create a <strong>ref</strong> for a React functional component like this:</p>
+          <div class="codecontainer">
+            <code>
+              const buttonWasClicked = useRef(false);
+            </code>
+          </div>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
@@ -149,17 +166,6 @@ export default Counter;
             <li></li>
           </ul>
         </section>
-        <section class="main-section" id="useRef">
-          <header>useRef</header>
-          <p></p>
-          <p></p>
-          <code></code>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </section>
         <section class="main-section" id="useImperativeHandle">
           <header>useImperativeHandle</header>
           <p></p>
@@ -205,6 +211,10 @@ export default Counter;
           <a href="https://reactjs.org/docs/hooks-reference.html" target="_blank">
             https://reactjs.org/docs/hooks-reference.html</a>
         </p>
+        <p class="reference">Wieruch, R. (2020, April 25). How to use React Ref. Retrieved from
+          <a href="https://www.robinwieruch.de/react-ref" target="_blank">
+            https://www.robinwieruch.de/react-ref</a>
+        </p> 
     </footer>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
