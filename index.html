@@ -97,13 +97,45 @@ export default Counter;
           <header>useRef</header>
           <p>useRef is a hook that mutates the current value of a variable that we initialize with an initial value.
           Its major difference to the useState hook is that it only updates the value of the variable, but does <strong>not</strong>
-          update state, so consequently does <strong>not</strong> cause a re-render either.</p>
+          update state. Consequently, useRef does <strong>not</strong> cause a re-render like useState does.</p>
           <p>We create a <strong>ref</strong> for a React functional component like this:</p>
           <div class="codecontainer">
             <code>
-              const buttonWasClicked = useRef(false);
+              const wasClicked = useRef(false);
             </code>
           </div>
+          <p>And we mutate its value using its <strong>current</strong> property:</p>
+          <div class="codecontainer">
+            <code>
+              wasClicked.current = true;
+            </code>
+          </div>
+          <p>If you noticed that wasClicked is a constant, yet we are mutating a value, it is because
+          we are updating the property called "current", not mutating the wasClicked object reference itself.</p>
+          <p>The functional component below uses a useRef hook. What will be logged to the console? Does the value of wasClicked show in the page?</p>
+          <div class="codecontainer">
+            <xmp>
+import React, { useRef } from 'react';
+
+const clickButton = () => {
+  const wasClicked = useRef("Not Clicked Yet");
+  const onClick = () => {
+    wasClicked.current = "Clicked";
+    console.log("Has clicked button? " + wasClicked.current);
+  };
+
+  return (
+    <div>
+      <p>The value of wasClicked is: {wasClicked.current}</p>
+      <button onClick={onClick}>Click Me</button>
+    </div>
+  );
+};
+
+export default clickButton;
+            </xmp>
+          </div>
+          <p>The code above will update the value of wasClicked and log it to the console, however it will not cause the page to re-render. The text in the DOM stays the same.</p>
           <ul>
             <li></li>
             <li></li>
