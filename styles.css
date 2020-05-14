@@ -9,11 +9,6 @@ body {
   display: flex;
   justify-content: space-between;
 }
-#navbar {
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 header {
   padding: 0.6em;
   text-align: center;
@@ -39,8 +34,8 @@ a.nav-link {
   text-decoration: none;
 }
 main {
-  width: 100%;
-  padding: 0 2em;
+  width: 95%;
+  margin: auto;
 }
 #main-doc li {
   padding: 0.3em;
@@ -73,20 +68,31 @@ footer > header {
   header {
     font-size: 1.2em;
   }
+  #navbar {
+    width: 100%;
+  }
 }
 @media (min-width: 500px) {
-  #content {
-    flex-direction: row;
-  }
   #navbar {
     min-width: 200px;
   }
 }
 @media (min-width: 760px) {
+  #content {
+    flex-direction: row;
+  }
   header {
     font-size: 1.8em;
   }
   #navbar {
-    min-width: 300px;
+    width: 200px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+@media (min-width: 1000px) {
+  #navbar {
+    width: 300px;
   }
 }
