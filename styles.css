@@ -49,6 +49,9 @@ main {
   border-radius: 10px;
   border: 1px solid #393939;
 }
+xmp {
+  overflow: auto;
+}
 footer {
   display: flex;
   flex-direction: column;

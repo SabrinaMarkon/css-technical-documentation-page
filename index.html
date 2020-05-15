@@ -14,12 +14,12 @@
         <ul>
           <li><a href="#hookRules" class="nav-link">Important Rules</a></li>
           <li><a href="#useState" class="nav-link">useState</a></li>
+          <li><a href="#useRef" class="nav-link">useRef</a></li>
           <li><a href="#useEffect" class="nav-link">useEffect</a></li>
           <li><a href="#useContext" class="nav-link">useContext</a></li>
           <li><a href="#useReducer" class="nav-link">useReducer</a></li>
           <li><a href="#useCallback" class="nav-link">useCallback</a></li>
           <li><a href="#useMemo" class="nav-link">useMemo</a></li>
-          <li><a href="#useRef" class="nav-link">useRef</a></li>
           <li><a href="#useImperativeHandle" class="nav-link">useImperativeHandle</a></li>
           <li><a href="#useLayoutEffect" class="nav-link">useLayoutEffect</a></li>
           <li><a href="#useDebugValue" class="nav-link">useDebugValue</a></li>
@@ -112,35 +112,38 @@ export default Counter;
           </div>
           <p>If you noticed that wasClicked is a constant, yet we are mutating a value, it is because
           we are updating the property called "current", not mutating the wasClicked object reference itself.</p>
-          <p>The functional component below uses a useRef hook. What will be logged to the console? Does the value of wasClicked show in the page?</p>
+          <p>The functional component below uses a useRef hook. What will be logged to the console? What will appear in the webpage itself (DOM)?</p>
           <div class="codecontainer">
             <xmp>
-import React, { useRef } from 'react';
+  import React, { useRef } from "react";
 
-const clickButton = () => {
-  const wasClicked = useRef("Not Clicked Yet");
-  const onClick = () => {
-    wasClicked.current = "Clicked";
-    console.log("Has clicked button? " + wasClicked.current);
+  const clickButton = () => {
+    const wasClicked = useRef("Not Clicked Yet");
+    const onClick = () => {
+      wasClicked.current = "Clicked";
+      console.log("Has clicked button? " + wasClicked.current);
+    };
+  
+    return (
+      <div>
+        <p>The value of wasClicked is: {wasClicked.current}</p>
+        <button onClick={onClick}>Click Me</button>
+      </div>
+    );
   };
-
-  return (
-    <div>
-      <p>The value of wasClicked is: {wasClicked.current}</p>
-      <button onClick={onClick}>Click Me</button>
-    </div>
-  );
-};
-
-export default clickButton;
+  
+  export default clickButton;
             </xmp>
           </div>
-          <p>The code above will update the value of wasClicked and log it to the console, however it will not cause the page to re-render. The text in the DOM stays the same.</p>
+          <p>The code above will update the value of wasClicked and log it to the console, 
+            however it will not cause the page to re-render, so the text in the DOM stays the <strong>same</strong>.</p>
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>Console when the component mounts for the first time: nothing in the console</li>
+            <li>DOM when the component mounts for the first time: "The value of wasClicked is: Not Clicked Yet"</li>
+            <li>Console when the button is clicked: "Has clicked button? Clicked"</li>
+            <li>DOM when the button is clicked: "The value of wasClicked is: <strong>Not Clicked Yet</strong>".</li>
           </ul>
+          <p>The ref is mutated when the button is clicked, but it does not trigger the DOM to be re-rendered, unlike when we use useState.</p>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
