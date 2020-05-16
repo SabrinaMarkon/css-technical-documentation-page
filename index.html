@@ -40,7 +40,7 @@
           </section>
         <section class="main-section" id="useState">
           <header>useState</header>
-          <p>React functional components use the <strong>useState()</strong> React hook to keep track of "stateful" values, or 
+          <p>React functional components use the <strong>useState</strong> React hook to keep track of "stateful" values, or 
           variable value changes that we need to keep track of in our application.</p>
           <p>In the code below, you can see a typical example of a useState hook.</p>
           <div class="codecontainer">
@@ -144,6 +144,61 @@ export default Counter;
             <li>DOM when the button is clicked: "The value of wasClicked is: <strong>Not Clicked Yet</strong>".</li>
           </ul>
           <p>The ref is mutated when the button is clicked, but it does not trigger the DOM to be re-rendered, unlike when we use useState.</p>
+          <p>So what would useRef be good for?</p>
+          <p>Well, if we wanted to track a state value that changes but shouldn't cause a re-render, we can create a useRef hook to use it as an <strong>instance variable</strong>.</p>
+          </p>A good use of this, for example, would be a situation where we want to run certain code whenever a component updates, but <strong>not</strong> when the component is first rendered.</p>
+          <p>For most situations, we would use the <a href="#useEffect">useEffect</a> hook to automatically execute the code when the component updates.</p>
+          <p>On the other hand, however, the <a href="#useEffect">useEffect</a> hook is also triggered when a component is <strong>first mounted</strong>, which therefore doesn't meet our requirement above.</p>
+          <p>In the below code, you can see how we create a variable, using the useRef hook, called firstRender, whose value defaults to true, but is changed to false when the component re-renders. The useEffect hook runs every time a component is rendered or re-rendered, so if we don't want it to run that first time when the component is rendered for the first time, we can check the ref variable firstRender to make sure its value is false before running the code.</p>
+          <div class="codecontainer">
+            <xmp>
+import { useState, useRef, useEffect } from 'react';
+export default function ComponentWithRefInstanceVariable() {
+  const [count, setCount] = React.useState(0);
+ 
+  function onClick() {
+    setCount(count + 1);
+  }
+ 
+  const isFirstRender = React.useRef(true);
+ 
+  React.useEffect(() => {
+    if (isFirstRender.current) {
+
+      /* 
+      * This is the first time the component is mounted, so DO NOT run the
+      * code (in the else statement). Set isFirstRender to false though
+      * for when the component loads again.
+      */
+
+      isFirstRender.current = false;
+
+    } else {
+      // this won't run if isFirstRender.current = true, which is only
+      // when the component is FIRST rendered. 
+      console.log(
+        `
+          I am a useEffect hook's logic
+          which runs for a component's
+          re-render.
+        `
+      );
+    }
+  });
+ 
+  return (
+    <div>
+      <p>{count}</p>
+ 
+      <button type="button" onClick={onClick}>
+        Increase
+      </button>
+    </div>
+  );
+}
+// Code example (Wieruch, 2020). 
+            </xmp>
+          </div>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
