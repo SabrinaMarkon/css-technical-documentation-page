@@ -286,6 +286,7 @@ export default function useEffectExample() {
 }
             </xmp>
           </div>
+          <p>Before another effect runs after a re-render, React will clean up the previous render's effects. Some subscriptions, however, may need useEffect to return a cleanup function (anonymous or named is fine) that automatically executes and unsubscribes.</p>
           <p>The useEffect hook is also wonderful because it does not block the browser when its side-effects are being run, which makes the app feel fast and responsive!</p>
         </section>
         <section class="main-section" id="useContext">
