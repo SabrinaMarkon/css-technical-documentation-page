@@ -154,15 +154,15 @@ export default Counter;
             <xmp>
 import { useState, useRef, useEffect } from 'react';
 export default function ComponentWithRefInstanceVariable() {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
  
   function onClick() {
     setCount(count + 1);
   }
  
-  const isFirstRender = React.useRef(true);
+  const isFirstRender = .useRef(true);
  
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFirstRender.current) {
 
       /* 
@@ -202,15 +202,91 @@ export default function ComponentWithRefInstanceVariable() {
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
-          <p></p>
-          <p></p>
-          <p></p>
-          <code></code>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+          <p>When we update state, many apps also need to execute side-effects, such as making API calls, communicating with a database, or updating local storage. Since state causes re-renders, we can use the useEffect hook to run our side-effect every time I render or re-render occurs, or just when a certain state value is updated.</p>
+          <p>useEffect has a second argument, which when left out, defaults to mean that the side-effect code should execute every time any state value is changed. When this parameter is provided to useEffect, though, we can change when it runs.</p>
+          <ol>
+            <li>
+              <p>Leave out the second argument so code in useEffect runs on mount and re-render of the component:</p>
+              <div class="codecontainer">
+                <code>
+                  useEffect(() => {
+                    /* side-effect code. */
+                  });
+                </code>
+              </div>
+            </li>
+            <li>
+              <p>Set the second parameter as an empty array, which means the useEffect code runs <strong>only</strong> when the component is first mounted, but not when state is updated.</p>
+              <div class="codecontainer">
+                <code>
+                  useEffect(() => {
+                    /* side-effect code. */
+                  }, []);
+                </code>
+              </div>
+            </li>
+            <li>
+              <p>Set the second parameter as an array containing a list of one or more state variables. When any of these is mutated, execute the useEffect code. Other state variables do not cause the useEffect code to be invoked.</p>
+            </li>
+              <div class="codecontainer">
+                <code>
+                  useEffect(() => {
+                    /* side-effect code. */
+                  }, [count, color, loggedIn]);
+                </code>
+              </div>
+          </ol>
+          <p>In a component, we can use useEffect as many times as we need! Our code ends up clean and readable, replacing the two lifecycle methods that are required by class components to accomplish the same things (componentDidMount and componentDidUpdate).</p>
+          <p>Below, the code contained within the useEffect block executes every time the component is rendered. That is, when it first mounts along with every state update that causes a re-render.</p>
+          <div class="codecontainer">
+            <xmp>
+import { useState, useEffect } from 'react';
+export default function useEffectExample() {
+  const [count, setCount] = useState(0);
+  const [color, setColor] = useState('pink');
+ 
+  function onCountClick() {
+    setCount(count + 1);
+  }
+
+  function onColorClick() {
+    setColor('blue');
+  }
+ 
+  useEffect(() => {
+    // Executes every time state is changed. 
+    // Any state value.
+    // i.e. a fetch or axios request.
+  });
+ 
+   useEffect(() => {
+    // Executes <strong>only</strong> 
+    // when the color state changes.
+    // i.e. some other side-effect.
+  }, [color]);
+
+   useEffect(() => {
+    // Executes <strong>only</strong> 
+    // when the component mounts for the first time.
+    // i.e. some other side-effect.
+  }, []);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button type="button" onClick={onCountClick}>
+        Increment Counter
+      </button>
+      <p>{color}</p>
+      <button type="button" onClick={onColorClick}>
+        Change Color
+      </button>
+    </div>
+  );
+}
+            </xmp>
+          </div>
+          <p>The useEffect hook is also wonderful because it does not block the browser when its side-effects are being run, which makes the app feel fast and responsive!</p>
         </section>
         <section class="main-section" id="useContext">
           <header>useContext</header>
