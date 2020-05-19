@@ -304,12 +304,20 @@ export default function useEffectExample() {
               </div>
             </li>
             <li><p>The Context we created is an object that contains two values: { Provider, Consumer }.</p></li>
-            <li><p>In the render section, enclose the app's children with myContext.Provider, and the attributes we want child components to have access to:</p>
+            <li><p>In the render section, enclose the app's children with myContext.Provider, and add a <strong>value</strong> attribute where we pass our state variables as an object:</p>
                 <div class="codecontainer">
                   <xmp>
-function myApp() {
+export default function myApp() {
+  const [count, setCount] = useState(1);
+  const [greeting, setGreeting] = useState('Hai thar!');
+
   return (
-    <myContext.Provider value1={'Hello'} value2={'World'}>
+    <myContext.Provider value={{
+      count,
+      greeting,
+      setCount,
+      setGreeting
+    }}>
       <div>
         <ChildComponent />
       </div>
@@ -319,21 +327,37 @@ function myApp() {
                 </xmp>
               </div>
             </li>
-            <li><p>To access the values, value1 and value2, from any of myApp's child components, import React's useContext hook and pass the Context, myContext as a parameter.</p>
+            <li><p>To access the state in the myContext.Provider value from any child component that needs it, import React's useContext hook and pass the Context, myContext as a parameter.</p>
               <div class="codecontainer">
                 <xmp>
 import React, { useContext } from 'react';
 
-function ChildComponent() {
-  const value1 = useContext(myContext);
-  const value2 = useContext(myContext);
-  return <div>value1 and value2 say: {value1} {value2}!</div>;
+export default function ChildComponent() {
+  const value = useContext(myContext);
+  return <div>The value of the greeting state variable: {value.greeting}</div>;
 }
               </xmp>
               </div>      
             </li>
+            <li><p>If we want to update state from the ChildComponent, the setGreeting and setCount methods are also available in the Context. Cool!</p>
+              <div class="codecontainer">
+                  <xmp>
+  import React, { useContext } from 'react';
+  
+  export default function ChildComponent() {
+    const value = useContext(myContext);
+    return <div>
+        <div>The value of the greeting state variable: {value.greeting}</div>
+        <label>Update Greeting: </label>
+        <input type="text" name="greeting" onChange={e => value.setGreeting(e.target.value)} value={greeting} />
+    </div>;
+  }
+                </xmp>
+              </div>  
+            </li>
           </ol>
-          <p>Importantly, when the values provided by myContext.Provider change, the value will also be updated in all child components that use those values, triggering them to re-render, and the re-renders are <strong>recursive</strong>. That is, if a child component that uses useContext re-renders, all its children will also re-render! Hence, the app could take a performance hit. To remedy this, we can use React memo or PureComponent on the children so they don't re-render if they do not need to.</p>
+          <p>Importantly, when the values provided by myContext.Provider change, the value will also be updated in all child components that use those values, triggering them to re-render, and the re-renders are <strong>recursive</strong>. That is, if a child component that uses useContext re-renders, all its children <strong>that use the useContext</strong> (but not the children that don't) will also re-render! Hence, the app could take a performance hit. To remedy this, we can use React memo or PureComponent on the children so they don't re-render if they do not need to.</p>
+          <p>The React useContext hook also allows us to create multiple Contexts, and we can then nest child components in the ones they need access to.</p>
         </section>
         <section class="main-section" id="useReducer">
           <header>useReducer</header>
