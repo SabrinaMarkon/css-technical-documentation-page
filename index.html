@@ -16,7 +16,7 @@
           <li><a href="#useState" class="nav-link" rel="internal">useState</a></li>
           <li><a href="#useRef" class="nav-link" rel="internal">useRef</a></li>
           <li><a href="#useEffect" class="nav-link" rel="internal">useEffect</a></li>
-          <li><a href="##useContext" class="nav-link" rel="internal">useContext</a></li>
+          <li><a href="#useContext" class="nav-link" rel="internal">useContext</a></li>
           <li><a href="#useReducer" class="nav-link" rel="internal">useReducer</a></li>
           <li><a href="#useCallback" class="nav-link" rel="internal">useCallback</a></li>
           <li><a href="#useMemo" class="nav-link" rel="internal">useMemo</a></li>
@@ -289,7 +289,7 @@ export default function useEffectExample() {
           <p>Before another effect runs after a re-render, React will clean up the previous render's effects. Some subscriptions, however, may need useEffect to return a cleanup function (anonymous or named is fine) that automatically executes and unsubscribes.</p>
           <p>The useEffect hook is also wonderful because it does not block the browser when its side-effects are being run, which makes the app feel fast and responsive!</p>
         </section>
-        <section class="main-section" id="#useContext">
+        <section class="main-section" id="useContext">
           <header>useContext</header>
           <p>The React useContext hook is used in combination with the React Context API.</p>
           <p>Without using Context in React, props that need to be shared between components are passed as attributes from parent to child to child's child, etc. In addition, functions that mutate the same values are also passed to child components by the parent as attributes that the child component can use to pass mutated props back to the parent.</p>
@@ -361,9 +361,45 @@ export default function ChildComponent() {
         </section>
         <section class="main-section" id="useReducer">
           <header>useReducer</header>
-          <p>A Reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. This pattern is what Redux uses to provide access to state variables from React components. Using the useReducer hook, our React functional components can also dispatch actions to reducer functions that will run code and mutate state variable values based on the value of the action. Action are essentially just a constant value that acts as the command sent to the reducer function, and may or may not contain a data payload as well.</p>
-          <p>For example, the below code demonstrates, again, a quintessential counter function. This time, however, it uses a reducer function to update the value of the count state variable depending on whether the use dispatches, by choosing a button to click, an "increment", "decrement", or "reset" function.</p>
-          <code></code>
+          <p>A Reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "Reducer" comes from the fact that the reducer function receives two values, an action and the current state object, and reduces it to one that it returns as the new state. Think of the JavaScript array's reduce function that accepts an accumulator and an item to reduce an array to one valus to help remember the concept of a reducer. This pattern is what Redux uses to provide access to state variables from React components.</p>
+          <p>Using the <strong>useReducer</strong> hook, our React functional components can also dispatch actions to reducer functions that will run code and mutate state based on the value of the action. An action is essentially just an object with a constant property, "type", that acts as the command sent to the reducer function optionally accompanied by an optional data payload.</p>
+          <p>For example, the below code demonstrates, again, the quintessential counter function. This time, however, it uses a reducer function to update the value of the count state variable depending on whether the use dispatches, by choosing a button to click, an "increment", "decrement", or "reset" function.</p>
+          <div class="codecontainer">
+            <xmp>
+import React, { useReducer } from 'react';
+
+const INCREMENT = "increment";
+const DECREMENT = "decrement";
+const RESET = "reset";
+const initialState = 0;
+
+const reducer = (state = initialState, action) => {
+  switch(action.type) {
+    case INCREMENT:
+      return state + 1;
+    case DECREMENT:
+      return state - 1;
+    case RESET:
+      return 0;
+    default:
+      throw new Error();
+  }
+}
+
+export default function Counter() {
+
+  const [count, dispatch] = useReducer(reducer, initialState)
+
+  return (<>
+    <div>Counter: {count}</div>
+    <button onClick={increment=> dispatch({ type: INCREMENT })}>INCREMENT</button>
+    <button onClick={decrement=> dispatch({ type: DECREMENT })}>DECREMENT</button>
+    <button onClick={reset=> dispatch({ type: RESET })}>RESET</button>
+  </>);
+}
+          </xmp>
+        </div>
+        <p>useReducer can replace useState, so is often used to manage state that is more complex and needs to be accessed by a tree of components.</p>
           <ul>
             <li></li>
             <li></li>
