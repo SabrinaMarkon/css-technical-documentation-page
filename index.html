@@ -361,9 +361,16 @@ export default function ChildComponent() {
         </section>
         <section class="main-section" id="useReducer">
           <header>useReducer</header>
-          <p>A Reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "Reducer" comes from the fact that the reducer function receives two values, an action and the current state object, and reduces it to one that it returns as the new state. Think of the JavaScript array's reduce function that accepts an accumulator and an item to reduce an array to one valus to help remember the concept of a reducer. This pattern is what Redux uses to provide access to state variables from React components.</p>
-          <p>Using the <strong>useReducer</strong> hook, our React functional components can also dispatch actions to reducer functions that will run code and mutate state based on the value of the action. An action is essentially just an object with a constant property, "type", that acts as the command sent to the reducer function optionally accompanied by an optional data payload.</p>
-          <p>For example, the below code demonstrates, again, the quintessential counter function. This time, however, it uses a reducer function to update the value of the count state variable depending on whether the use dispatches, by choosing a button to click, an "increment", "decrement", or "reset" function.</p>
+          <p>A reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "reducer" comes from the fact that the reducer function receives two values, an action and the current state object. It then "reduces" these two values into one that it returns as the new state. To help remember the concept of a reducer, think of the Array reduce method that accepts 1) an accumulator and 2) each item of the array, to reduce an array to a single value. This pattern is what Redux uses to provide access to state variables from React components.</p>
+          <p>There are several important rules for a reducer function to follow:</p>
+          <ul>
+            <li>The code inside the reducer function should never mutate its arguments, which are the current state and the dispatched action. To return a new state, a copy of the original should be made first.</li>
+            <li>The reducer code should not be generating side effects, such as database or API calls. It should be a pure function.</li>
+            <li>As well, any functions that the reducer calls within its code should always be pure functions themselves. That is, their output should only depend on their input. For example, Date.now() or Math.random() are <strong>not</strong> pure functions.</li>
+          </ul>
+          <p>(Copes, 2019)</p>
+          <p>Using the <strong>useReducer</strong> hook, our React functional components can also dispatch actions to reducer functions that will run code and update a new copy of state based on the value of the action. An action is essentially just an object with a constant property, "type", that acts as the command sent to the reducer function optionally accompanied by an optional data payload.</p>
+          <p>For example, the below code demonstrates, again, the quintessential counter function. This time, however, it uses a reducer function to update the value of the count state depending on whether the user dispatches, by choosing a button to click, an "increment", "decrement", or "reset" action.</p>
           <div class="codecontainer">
             <xmp>
 import React, { useReducer } from 'react';
@@ -400,11 +407,6 @@ export default function Counter() {
           </xmp>
         </div>
         <p>useReducer can replace useState, so is often used to manage state that is more complex and needs to be accessed by a tree of components.</p>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
         </section>
         <section class="main-section" id="useCallback">
           <header>useCallback</header>
