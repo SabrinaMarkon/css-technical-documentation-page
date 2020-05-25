@@ -95,9 +95,9 @@ export default Counter;
         </section>
         <section class="main-section" id="useRef">
           <header>useRef</header>
-          <p>useRef is a hook that mutates the current value of a variable that we initialize with an initial value.
+          <p>useRef is a hook that mutates the current value of a variable that we can optionally initialize with an initial value, or leave undefined.
           Its major difference to the useState hook is that it only updates the value of the variable, but does <strong>not</strong>
-          update state. Consequently, useRef does <strong>not</strong> cause a re-render like useState does.</p>
+          update state. Consequently, useRef does <strong>not</strong> cause a re-render like useState does, and we can use it when storing a value in state is not wanted or necessary.</p>
           <p>We create a <strong>ref</strong> for a React functional component like this:</p>
           <div class="codecontainer">
             <code>
@@ -199,6 +199,42 @@ export default function ComponentWithRefInstanceVariable() {
 // Code example (Wieruch, 2020). 
             </xmp>
           </div>
+          <p>The useRef hook is frequently used with DOM elements in order to get their values out without having to store them in state. The useRef hook contains a reference to a DOM node which we can then access directly.</p>
+          <p>In the below code example, you can see how we can make a useRef object we name inputRef, and pass inputRef to the ref attribute of a text input field. Now, we can access the value of the text field with the inputRef object's <strong>current</strong> property, <strong>inputRef.current</strong>.</p>
+          <div class="codecontainer">
+            <xmp>
+  import React, { useRef } from 'react';
+  export default function ComponentWithRefForDOMElement() {
+
+    const inputRef = useRef();
+   
+    function onSubmit(event) {
+      event.preventDefault();
+
+      // Will log the current value of the text field to the console.
+      console.log(inputRef.current.value); // whatever you've typed in the field.
+
+      // Will log which DOM node inputRef refers to, along with its attributes, 
+      // including name, id, style, etc. if present.
+      console.log(inputRef.current); // <input name="wow" id="lol" style="color: red;">
+
+      // Changes the style of the inputRef's text to blue!
+      inputRef.current.style = "color: blue";
+    }
+    
+    return (
+      <>
+        {/* <p>{inputRef.current.value}</p> */}
+        <form onSubmit={onSubmit}>
+          <input id="hi" name="ho" style={{ color: "red" }} ref={inputRef} />
+        </form>
+      </>
+    );
+  } 
+            </xmp>
+          </div>
+          <p>Observe that while we can log the inputRef to the console or change styles, a change in value that we type is <strong>not</strong> updated in the DOM (where we have &lt;p&gt;{inputRef.current.value}&lt;/p&gt;).</p>
+          <p> That is, we cannot see the changes to value in the DOM, and get an error when the component loads if we try to access it, if the initial value is undefined. If the initial state is <strong>not</strong> undefined, we still see nothing in the DOM.</p>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
@@ -407,7 +443,7 @@ export default function Counter() {
 }
           </xmp>
         </div>
-        <p>useReducer is much like useState, except that it has a reducer function as an intermediary for when we need to change the state. Thus, instead of setting state directly, we can execute the dispatch function with any action, and the reducer will execute code based on the action it receives. The reducer will ultimately update the state and return it, and the state change will therefore cause a re-render.</p>
+        <p>useReducer is much like useState, except that it has a reducer function as an intermediary for when we need to change the state (Ceddia, 2018). Thus, instead of setting state directly, we can execute the dispatch function with any action, and the reducer will execute code based on the action it receives. The reducer will ultimately update the state and return it, and the state change will therefore cause a re-render.</p>
         <p>The useReducer hook, then, is often used instead of useState to manage state that is more complex and needs to be accessed by a tree of components.</p>
         </section>
         <section class="main-section" id="useCallback">
