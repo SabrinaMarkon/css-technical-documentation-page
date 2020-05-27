@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="./styles.css" />
-    <title>React Hooks Tutorial</title>
+    <title>React Hooks Notes</title>
   </head>
   <body>
     <div id="content">
       <nav id="navbar">
-        <header>React Hooks Tutorial</header>
+        <header>React Hooks Notes</header>
         <ul>
           <li><a href="#Important_Rules" class="nav-link" rel="internal">Important Rules</a></li>
           <li><a href="#useState" class="nav-link" rel="internal">useState</a></li>
@@ -397,7 +397,7 @@ export default function ChildComponent() {
         </section>
         <section class="main-section" id="useReducer">
           <header>useReducer</header>
-          <p>A reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "reducer" comes from the fact that the reducer function receives two values, an action and the current state object. It then "reduces" these two values into one that it returns as the new state. To help remember the concept of a reducer, think of the Array reduce method that accepts 1) an accumulator and 2) each item of the array, to reduce an array to a single value. This pattern is what Redux uses to provide access to state variables from React components.</p>
+          <p>A reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "reducer" comes from the fact that the reducer function receives two values, an action and the current state object. It then "reduces" these two values into one that it returns as the new state. To help remember the concept of a reducer, think of the Array reduce method that accepts 1) an accumulator and 2) each item of the array, to reduce an array to a single value. This pattern is what Redux uses to provide access to state variables from React components. Ultimately, a reducer takes in an action and a previous state value, and returns a new state.</p>
           <p>There are several important rules for a reducer function to follow:</p>
           <ul>
             <li>The code inside the reducer function should never mutate its arguments, which are the current state and the dispatched action. To return a new state, a copy of the original should be made first.</li>
@@ -445,6 +445,15 @@ export default function Counter() {
         </div>
         <p>useReducer is much like useState, except that it has a reducer function as an intermediary for when we need to change the state (Ceddia, 2018). Thus, instead of setting state directly, we can execute the dispatch function with any action, and the reducer will execute code based on the action it receives. The reducer will ultimately update the state and return it, and the state change will therefore cause a re-render.</p>
         <p>The useReducer hook, then, is often used instead of useState to manage state that is more complex and needs to be accessed by a tree of components.</p>
+        
+      
+      <!-- USE EXAMPLE FROM youtube tutorial (Dave Ceddia) -->
+
+
+
+      <!-- third argument - init  -->
+      
+      
         </section>
         <section class="main-section" id="useCallback">
           <header>useCallback</header>
@@ -513,6 +522,10 @@ export default function Counter() {
             <a href="https://daveceddia.com/usereducer-hook-examples" target="_blank">
               https://daveceddia.com/usereducer-hook-examples</a>
         </p>
+        <p class="reference">Ceddia, D. (2019, January 30). The useReducer Hook. Retrieved from 
+          <a href="https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo" target="_blank">
+            https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo</a>
+        </p>
         <p class="reference">Copes, F. (2019, July 23). How to use the useReducer React hook. Retrieved from 
             <a href="https://flaviocopes.com/react-hook-usereducer" target="_blank">
               https://flaviocopes.com/react-hook-usereducer</a>
@@ -520,6 +533,10 @@ export default function Counter() {
         <p class="reference">ReactJS.org (n.d.). Hooks API Reference. Retrieved from
           <a href="https://reactjs.org/docs/hooks-reference.html" target="_blank">
             https://reactjs.org/docs/hooks-reference.html</a>
+        </p>
+        <p class="reference">Spukas, L. (2019, August 18). 3 Reasons to useReducer() over useState(). Retrieved from
+          <a href="https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad" target="_blank">
+            https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad</a>
         </p>
         <p class="reference">Wieruch, R. (2020, April 25). How to use React Ref. Retrieved from
           <a href="https://www.robinwieruch.de/react-ref" target="_blank">
