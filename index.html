@@ -507,18 +507,13 @@ const [state, dispatch] = React.useReducer(
         <p>The code above shows a state with a complicated shape. If any parameters depend on each other, also, the useReducer hook allows us to encapsulate everything nicely into the single reducer function.</p>
         <p>Finally, since a reducer is a pure function that always returns the same output for the same input parameters with zero side effects, it is suited for testing, since it does not depend on React (Spukas, 2019).</p>
 
-
-      <!-- USE EXAMPLE FROM youtube tutorial (Dave Ceddia) -->
-
-
-
-
-      
+      <!-- USE EXAMPLE FROM youtube tutorial (Dave Ceddia) -->    
       
         </section>
         <section class="main-section" id="useCallback">
           <header>useCallback</header>
-          <p></p>
+          <p>When you have a child component that needs to re-render often, all of its functions must be reinstantiated as well, even those that handle a different state variable than the one that changed. Although this might not be noticeable in a small component, it can cause a performance hit in a component that has multiple state values that are changed independently of others.</p>
+          <p>So, if one state value is changed, it should only cause functions that access it to reinstantiate, and leave functions that do not alone.</p>
           <p></p>
           <code></code>
           <ul>
