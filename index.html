@@ -515,61 +515,95 @@ const [state, dispatch] = React.useReducer(
           <p>When you have a child component that needs to re-render often, all its functions will reinstantiate as well, even those that handle a different state variable than the one that changed. Although this might not be a big deal in a smaller component, it can cause a performance hit in a more complex component that has multiple state values. If one state value is changed, it should only cause functions that access it to reinstantiate, and leave functions that do not alone, yet this is not the case. In the example code below, updating the value of the "count1" state will cause a re-render that recreates <strong>all</strong> functions in the component, including <strong>both</strong> functions that don't even concern count1. The incrementCount2 and decrementCount2 functions are for count2 only, but are recreated anyway when count1 is updated.</p>
           <div class="codecontainer">
             <xmp>
-                import React, { useState } from "react";
+import React, { useState } from "react";
 
-                const Counter = () => {
-                  const [count1, setCount1] = useState(0);
-                  const [count2, setCount2] = useState(0);
-                
-                  // count1 functions. When count1 is updated, the component
-                  // re-renders and has to recreate all the functions, even the two
-                  // that do not even use count1.
-                  const incrementCount1 = () => {
-                    setCount1(count1 + 1);
-                  };
-                  const decrementCount1 = () => {
-                    setCount1(count1 - 1);
-                  };
-                
-                  // count2 functions. When count2 is updated, the component
-                  // re-renders and has to recreate all the functions, even the two
-                  // that do not even use count2.
-                  const incrementCount2 = () => {
-                    setCount2(count2 + 1);
-                  };
-                  const decrementCount2 = () => {
-                    setCount2(count2 - 1);
-                  };
-                
-                  return (
-                    <>
-                      Count1: {count1} <br />
-                      Count2: {count2} <br />
-                      <button onClick={incrementCount1}>Increment count1</button>
-                      <button onClick={decrementCount1}>Decrement count1</button>
-                      <button onClick={incrementCount2}>Increment count2</button>
-                      <button onClick={decrementCount2}>Decrement count2</button>
-                    </>
-                  );
-                };
-                
-                export default Counter;                
+const Counter = () => {
+  const [count1, setCount1] = useState(0);
+  const [count2, setCount2] = useState(0);
+
+  // count1 functions. When count1 is updated, the component
+  // re-renders and has to recreate all the functions, even the two
+  // that do not even use count1.
+  const incrementCount1 = () => {
+    setCount1(count1 + 1);
+  };
+  const decrementCount1 = () => {
+    setCount1(count1 - 1);
+  };
+
+  // count2 functions. When count2 is updated, the component
+  // re-renders and has to recreate all the functions, even the two
+  // that do not even use count2.
+  const incrementCount2 = () => {
+    setCount2(count2 + 1);
+  };
+  const decrementCount2 = () => {
+    setCount2(count2 - 1);
+  };
+
+  return (
+    <>
+      Count1: {count1} <br />
+      Count2: {count2} <br />
+      <button onClick={incrementCount1}>Increment count1</button>
+      <button onClick={decrementCount1}>Decrement count1</button>
+      <button onClick={incrementCount2}>Increment count2</button>
+      <button onClick={decrementCount2}>Decrement count2</button>
+    </>
+  );
+};
+
+export default Counter;                
             </xmp>
           </div>
           <p>To solve the problem, and make it so that we don't recreate functions in a re-render that do not concern the state value that was updated, we can use the useCallback hook to <strong>memoize</strong> a function's callback so it only changes if one of its inputs changes (Noring, n.d.).</p>
+          <p>All we need to do is wrap each of the functions with a useCallback that has an array for its second parameter that includes any state values that should cause the function to be recreated when the component re-renders.</p>
+          <div class="codecontainer">
+              <xmp>
+import React, { useState } from "react";
 
+const Counter = () => {
+  const [count1, setCount1] = useState(0);
+  const [count2, setCount2] = useState(0);
 
- 
- 
- 
-          This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders
+  // count1 functions. When count1 is updated, the component
+  // re-renders and has to recreate all the functions, even the two
+  // that do not even use count1.
+  const incrementCount1 = useCallback(() => {
+    setCount1(count1 + 1);
+  }, [count1]);
 
-          <code></code>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+  const decrementCount1 = useCallback(() => {
+    setCount1(count1 - 1);
+  }, [count1]);
+
+  // count2 functions. When count2 is updated, the component
+  // re-renders and has to recreate all the functions, even the two
+  // that do not even use count2.
+  const incrementCount2 = useCallback(() => {
+    setCount2(count2 + 1);
+  }, [count2]);
+
+  const decrementCount2 = useCallback(() => {
+    setCount2(count2 - 1);
+  }, [count2]);
+
+  return (
+    <>
+      Count1: {count1} <br />
+      Count2: {count2} <br />
+      <button onClick={incrementCount1}>Increment count1</button>
+      <button onClick={decrementCount1}>Decrement count1</button>
+      <button onClick={incrementCount2}>Increment count2</button>
+      <button onClick={decrementCount2}>Decrement count2</button>
+    </>
+  );
+};
+
+export default Counter;
+              </xmp>
+            </div>
+            <p>Now, with each call wrapped in useCallback, the functions will only be reinstantiated when the state values specified in the second parameter array are changed, thus optimizing performance.</p>
         </section>
         <section class="main-section" id="useMemo">
           <header>useMemo</header>
