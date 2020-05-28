@@ -512,9 +512,58 @@ const [state, dispatch] = React.useReducer(
         </section>
         <section class="main-section" id="useCallback">
           <header>useCallback</header>
-          <p>When you have a child component that needs to re-render often, all of its functions must be reinstantiated as well, even those that handle a different state variable than the one that changed. Although this might not be noticeable in a small component, it can cause a performance hit in a component that has multiple state values that are changed independently of others.</p>
-          <p>So, if one state value is changed, it should only cause functions that access it to reinstantiate, and leave functions that do not alone.</p>
-          <p></p>
+          <p>When you have a child component that needs to re-render often, all its functions will reinstantiate as well, even those that handle a different state variable than the one that changed. Although this might not be a big deal in a smaller component, it can cause a performance hit in a more complex component that has multiple state values. If one state value is changed, it should only cause functions that access it to reinstantiate, and leave functions that do not alone, yet this is not the case. In the example code below, updating the value of the "count1" state will cause a re-render that recreates <strong>all</strong> functions in the component, including <strong>both</strong> functions that don't even concern count1. The incrementCount2 and decrementCount2 functions are for count2 only, but are recreated anyway when count1 is updated.</p>
+          <div class="codecontainer">
+            <xmp>
+                import React, { useState } from "react";
+
+                const Counter = () => {
+                  const [count1, setCount1] = useState(0);
+                  const [count2, setCount2] = useState(0);
+                
+                  // count1 functions. When count1 is updated, the component
+                  // re-renders and has to recreate all the functions, even the two
+                  // that do not even use count1.
+                  const incrementCount1 = () => {
+                    setCount1(count1 + 1);
+                  };
+                  const decrementCount1 = () => {
+                    setCount1(count1 - 1);
+                  };
+                
+                  // count2 functions. When count2 is updated, the component
+                  // re-renders and has to recreate all the functions, even the two
+                  // that do not even use count2.
+                  const incrementCount2 = () => {
+                    setCount2(count2 + 1);
+                  };
+                  const decrementCount2 = () => {
+                    setCount2(count2 - 1);
+                  };
+                
+                  return (
+                    <>
+                      Count1: {count1} <br />
+                      Count2: {count2} <br />
+                      <button onClick={incrementCount1}>Increment count1</button>
+                      <button onClick={decrementCount1}>Decrement count1</button>
+                      <button onClick={incrementCount2}>Increment count2</button>
+                      <button onClick={decrementCount2}>Decrement count2</button>
+                    </>
+                  );
+                };
+                
+                export default Counter;                
+            </xmp>
+          </div>
+          <p>To solve the problem, and make it so that we don't recreate functions in a re-render that do not concern the state value that was updated, we can use the useCallback hook to <strong>memoize</strong> a function's callback so it only changes if one of its inputs changes (Noring, n.d.).</p>
+
+
+ 
+ 
+ 
+          This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders
+
           <code></code>
           <ul>
             <li></li>
@@ -589,6 +638,10 @@ const [state, dispatch] = React.useReducer(
         <p class="reference">ReactJS.org (n.d.). Hooks API Reference. Retrieved from
           <a href="https://reactjs.org/docs/hooks-reference.html" target="_blank">
             https://reactjs.org/docs/hooks-reference.html</a>
+        </p>
+        <p class="reference">Noring, C. (n.d.). React Book. Retrieved from
+          <a href="https://softchris.github.io/books/react" target="_blank">
+            https://softchris.github.io/books/react</a>
         </p>
         <p class="reference">Spukas, L. (2019, August 18). 3 Reasons to useReducer() over useState(). Retrieved from
           <a href="https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad" target="_blank">
