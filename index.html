@@ -607,9 +607,21 @@ export default Counter;
         </section>
         <section class="main-section" id="useMemo">
           <header>useMemo</header>
-          <p></p>
-          <p></p>
-          <code></code>
+          <p>Although the useCallback and useMemo React hooks seem similar, while useCallback is used to create a memoized <strong>callback function</strong> to child components, the purpose of useMemo, in contrast, is to create a memoized <strong>value</strong>.</p>
+          <p>When an operation is computationally expensive or slow, a memoized value means that after it is calculated once, the value is cached so that next time we need it, we don't need to perform the expensive calculation again, and can instead used the cached version.</p>
+          <p>To use the useMemo hook, we need to pass it two parameters, a function (the slow, costly one) that creates the value we want to be memoized, and an array of parameters that if they change, trigger the function to run again to re-calculate the memoized value. If none of the parameters in the array change, the function does not need to run since the value should not be changed, which optimizes our code.</p>
+          <div class="codecontainer">
+            <code>
+                const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+            </code>
+          </div>
+          <p>Above, if either dependency, a or b, changes, we have to re-calculate the value of "memoizedValue" with the computeExpensiveValue function. Otherwise, if neither a nor b changes, we can use "memoizedValue" without computing it. The first time it is computed is when a component is first mounted, and it should not include side effects, since those should be in the useEffect hook instead.</p>
+          <p>*Importantly, if the array is left out like the below code, the value will never be memoized, because there are no dependencies saying that it shouldn't be recalculated. That is, the value would be recalculated every time the component re-renders if there are no parameters in the array. In addition, code should work regardless of whether useMemo works or not, as the React documentation advises (ReactJS.org, n.d.).</p>
+          <div class="codecontainer">
+              <code>
+                  const memoizedValue = useMemo(() => computeExpensiveValue(a, b));
+              </code>
+            </div>
           <ul>
             <li></li>
             <li></li>
@@ -665,6 +677,10 @@ export default Counter;
           <a href="https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo" target="_blank">
             https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo</a>
         </p>
+        <p class="reference">Copes, F. (2019, July 20). How to use the useMemo React hook. Retrieved from 
+          <a href="https://flaviocopes.com/react-hook-usememo" target="_blank">
+            https://flaviocopes.com/react-hook-usememo</a>
+      </p>
         <p class="reference">Copes, F. (2019, July 23). How to use the useReducer React hook. Retrieved from 
             <a href="https://flaviocopes.com/react-hook-usereducer" target="_blank">
               https://flaviocopes.com/react-hook-usereducer</a>
