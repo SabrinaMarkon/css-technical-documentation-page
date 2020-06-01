@@ -79,7 +79,7 @@ const Counter = () => {
       &lt;p&gt;You clicked {count} times&lt;/p&gt;
       &lt;button onClick={incrementCount}&gt;Click Me&lt;/button&gt;
     &lt;/&gt;
-  )
+  );
 }
 
 export default Counter;
@@ -370,7 +370,9 @@ import React, { useContext } from 'react';
 
 export default function ChildComponent() {
   const value = useContext(myContext);
-  return &lt;div&gt;The value of the greeting state variable: {value.greeting}&lt;/div&gt;;
+  return (
+    &lt;div&gt;The value of the greeting state variable: {value.greeting}&lt;/div&gt;
+  );
 }
               </pre>
               </div>      
@@ -382,11 +384,13 @@ export default function ChildComponent() {
   
   export default function ChildComponent() {
     const value = useContext(myContext);
-    return &lt;&gt;
+    return (
+      &lt;&gt;
         &lt;div&gt;The value of the greeting state variable: {value.greeting}&lt;/div&gt;
         &lt;label&gt;Update Greeting: &lt;/label&gt;
         &lt;input type="text" name="greeting" onChange={e =&gt; value.setGreeting(e.target.value)} value={greeting} /&gt;
-    &lt;/&gt;
+      &lt;/&gt;
+    );
   }
                 </pre>
               </div>  
@@ -434,12 +438,14 @@ export default function Counter() {
 
   const [count, dispatch] = useReducer(reducer, initialArg)
 
-  return (&lt;&gt;
-    &lt;div&gt;Counter: {count}&lt;/div&gt;
-    &lt;button onClick={increment =&gt; dispatch({ type: INCREMENT })}&gt;INCREMENT&lt;/button&gt;
-    &lt;button onClick={decrement =&gt; dispatch({ type: DECREMENT })}&gt;DECREMENT&lt;/button&gt;
-    &lt;button onClick={reset =&gt; dispatch({ type: RESET })}&gt;RESET&lt;/button&gt;
-  &lt;/&gt;);
+  return (
+    &lt;&gt;
+      &lt;div&gt;Counter: {count}&lt;/div&gt;
+      &lt;button onClick={increment =&gt; dispatch({ type: INCREMENT })}&gt;INCREMENT&lt;/button&gt;
+      &lt;button onClick={decrement =&gt; dispatch({ type: DECREMENT })}&gt;DECREMENT&lt;/button&gt;
+      &lt;button onClick={reset =&gt; dispatch({ type: RESET })}&gt;RESET&lt;/button&gt;
+      &lt;/&gt;
+    );
 }
           </pre>
         </div>
