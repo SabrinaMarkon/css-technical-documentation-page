@@ -63,7 +63,7 @@
           </p>
           <p>Example of a functional component using useState to keep track of a counter:</p>
           <div class="codecontainer">
-            <xmp>
+            <pre>
 /* When the "Click Me" button is clicked, the onClick event fires
  * and the incrementCount function is called that uses setCount to 
  * increment the count variable. */
@@ -75,15 +75,15 @@ const Counter = () => {
   const incrementCount = () => setCount(count + 1);
 
   return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={incrementCount}>Click Me</button>
-    </div>
+    &lt;&gt;
+      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+      &lt;button onClick={incrementCount}&gt;Click Me&lt;/button&gt;
+    &lt;/&gt;
   )
 }
 
 export default Counter;
-          </xmp>
+          </pre>
         </div>
         </p>So for each stateful variable your program needs, the <strong>generalized</strong> 
         format to set up the useState hook is:</p>
@@ -114,7 +114,7 @@ export default Counter;
           we are updating the property called "current", not mutating the wasClicked object reference itself.</p>
           <p>The functional component below uses a useRef hook. What will be logged to the console? What will appear in the webpage itself (DOM)?</p>
           <div class="codecontainer">
-            <xmp>
+            <pre>
   import React, { useRef } from "react";
 
   const clickButton = () => {
@@ -125,15 +125,15 @@ export default Counter;
     };
   
     return (
-      <div>
-        <p>The value of wasClicked is: {wasClicked.current}</p>
-        <button onClick={onClick}>Click Me</button>
-      </div>
+      &lt;&gt;
+        &lt;p&gt;The value of wasClicked is: {wasClicked.current}&lt;/p&gt;
+        &lt;button onClick={onClick}&gt;Click Me&lt;/button&gt;
+      &lt;/&gt;
     );
   };
   
   export default clickButton;
-            </xmp>
+            </pre>
           </div>
           <p>The code above will update the value of wasClicked and log it to the console, 
             however it will not cause the page to re-render, so the text in the DOM stays the <strong>same</strong>.</p>
@@ -151,8 +151,8 @@ export default Counter;
           <p>On the other hand, however, the <a href="#useEffect">useEffect</a> hook is also triggered when a component is <strong>first mounted</strong>, which therefore doesn't meet our requirement above.</p>
           <p>In the below code, you can see how we create a variable, using the useRef hook, called firstRender, whose value defaults to true, but is changed to false when the component re-renders. The useEffect hook runs every time a component is rendered or re-rendered, so if we don't want it to run that first time when the component is rendered for the first time, we can check the ref variable firstRender to make sure its value is false before running the code.</p>
           <div class="codecontainer">
-            <xmp>
-import { useState, useRef, useEffect } from 'react';
+            <pre>
+import React, { useState, useRef, useEffect } from 'react';
 export default function ComponentWithRefInstanceVariable() {
   const [count, setCount] = useState(0);
  
@@ -160,7 +160,7 @@ export default function ComponentWithRefInstanceVariable() {
     setCount(count + 1);
   }
  
-  const isFirstRender = .useRef(true);
+  const isFirstRender = useRef(true);
  
   useEffect(() => {
     if (isFirstRender.current) {
@@ -187,22 +187,22 @@ export default function ComponentWithRefInstanceVariable() {
   });
  
   return (
-    <div>
-      <p>{count}</p>
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
  
-      <button type="button" onClick={onClick}>
+      &lt;button type="button" onClick={onClick}&gt;
         Increase
-      </button>
-    </div>
+      &lt;/button&gt;
+    &lt;/&gt;
   );
 }
 // Code example (Wieruch, 2020). 
-            </xmp>
+            </pre>
           </div>
           <p>The useRef hook is frequently used with DOM elements in order to get their values out without having to store them in state. The useRef hook contains a reference to a DOM node which we can then access directly.</p>
           <p>In the below code example, you can see how we can make a useRef object we name inputRef, and pass inputRef to the ref attribute of a text input field. Now, we can access the value of the text field with the inputRef object's <strong>current</strong> property, <strong>inputRef.current</strong>.</p>
           <div class="codecontainer">
-            <xmp>
+            <pre>
   import React, { useRef } from 'react';
   export default function ComponentWithRefForDOMElement() {
 
@@ -216,22 +216,22 @@ export default function ComponentWithRefInstanceVariable() {
 
       // Will log which DOM node inputRef refers to, along with its attributes, 
       // including name, id, style, etc. if present.
-      console.log(inputRef.current); // <input name="wow" id="lol" style="color: red;">
+      console.log(inputRef.current); // &lt;input name="wow" id="lol" style="color: red;"&gt;
 
       // Changes the style of the inputRef's text to blue!
       inputRef.current.style = "color: blue";
     }
     
     return (
-      <>
-        {/* <p>{inputRef.current.value}</p> */}
-        <form onSubmit={onSubmit}>
-          <input id="hi" name="ho" style={{ color: "red" }} ref={inputRef} />
-        </form>
-      </>
+      &lt;&gt;
+        {/* &lt;p&gt;{inputRef.current.value}&lt;/p&gt; */}
+        &lt;form onSubmit={onSubmit}&gt;
+          &lt;input id="hi" name="ho" style={{ color: "red" }} ref={inputRef} /&gt;
+        &lt;/form&gt;
+      &lt;/&gt;
     );
   } 
-            </xmp>
+            </pre>
           </div>
           <p>Observe that while we can log the inputRef to the console or change styles, a change in value that we type is <strong>not</strong> updated in the DOM (where we have &lt;p&gt;{inputRef.current.value}&lt;/p&gt;).</p>
           <p> That is, we cannot see the changes to value in the DOM, and get an error when the component loads if we try to access it, if the initial value is undefined. If the initial state is <strong>not</strong> undefined, we still see nothing in the DOM.</p>
@@ -275,8 +275,8 @@ export default function ComponentWithRefInstanceVariable() {
           <p>In a component, we can use useEffect as many times as we need! Our code ends up clean and readable, replacing the two lifecycle methods that are required by class components to accomplish the same things (componentDidMount and componentDidUpdate).</p>
           <p>Below, the code contained within the useEffect block executes every time the component is rendered. That is, when it first mounts along with every state update that causes a re-render.</p>
           <div class="codecontainer">
-            <xmp>
-import { useState, useEffect } from 'react';
+            <pre>
+import React, { useState, useEffect } from 'react';
 export default function useEffectExample() {
   const [count, setCount] = useState(0);
   const [color, setColor] = useState('pink');
@@ -308,19 +308,19 @@ export default function useEffectExample() {
   }, []);
 
   return (
-    <div>
-      <p>{count}</p>
-      <button type="button" onClick={onCountClick}>
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button type="button" onClick={onCountClick}&gt;
         Increment Counter
-      </button>
-      <p>{color}</p>
-      <button type="button" onClick={onColorClick}>
+      &lt;/button&gt;
+      &lt;p&gt;{color}&lt;/p&gt;
+      &lt;button type="button" onClick={onColorClick}&gt;
         Change Color
-      </button>
-    </div>
+      &lt;/button&gt;
+    &lt;/&gt;
   );
 }
-            </xmp>
+            </pre>
           </div>
           <p>Before another effect runs after a re-render, React will clean up the previous render's effects. Some subscriptions, however, may need useEffect to return a cleanup function (anonymous or named is fine) that automatically executes and unsubscribes.</p>
           <p>The useEffect hook is also wonderful because it does not block the browser when its side-effects are being run, which makes the app feel fast and responsive!</p>
@@ -342,53 +342,53 @@ export default function useEffectExample() {
             <li><p>The Context we created is an object that contains two values: { Provider, Consumer }.</p></li>
             <li><p>In the render section, enclose the app's children with myContext.Provider, and add a <strong>value</strong> attribute where we pass our state variables as an object:</p>
                 <div class="codecontainer">
-                  <xmp>
+                  <pre>
 export default function myApp() {
   const [count, setCount] = useState(1);
   const [greeting, setGreeting] = useState('Hai thar!');
 
   return (
-    <myContext.Provider value={{
+    &lt;myContext.Provider value={{
       count,
       greeting,
       setCount,
       setGreeting
-    }}>
-      <div>
-        <ChildComponent />
-      </div>
-    </myContext.Provider>
+    }}&gt;
+      &lt;div&gt;
+        &lt;ChildComponent /&gt;
+      &lt;/div&gt;
+    &lt;/myContext.Provider&gt;
   );
 }
-                </xmp>
+                </pre>
               </div>
             </li>
             <li><p>To access the state in the myContext.Provider value from any child component that needs it, import React's useContext hook and pass the Context, myContext as a parameter.</p>
               <div class="codecontainer">
-                <xmp>
+                <pre>
 import React, { useContext } from 'react';
 
 export default function ChildComponent() {
   const value = useContext(myContext);
-  return <div>The value of the greeting state variable: {value.greeting}</div>;
+  return &lt;div&gt;The value of the greeting state variable: {value.greeting}&lt;/div&gt;;
 }
-              </xmp>
+              </pre>
               </div>      
             </li>
             <li><p>If we want to update state from the ChildComponent, the setGreeting and setCount methods are also available in the Context. Cool!</p>
               <div class="codecontainer">
-                  <xmp>
+                  <pre>
   import React, { useContext } from 'react';
   
   export default function ChildComponent() {
     const value = useContext(myContext);
-    return <div>
-        <div>The value of the greeting state variable: {value.greeting}</div>
-        <label>Update Greeting: </label>
-        <input type="text" name="greeting" onChange={e => value.setGreeting(e.target.value)} value={greeting} />
-    </div>;
+    return &lt;&gt;
+        &lt;div&gt;The value of the greeting state variable: {value.greeting}&lt;/div&gt;
+        &lt;label&gt;Update Greeting: &lt;/label&gt;
+        &lt;input type="text" name="greeting" onChange={e =&gt; value.setGreeting(e.target.value)} value={greeting} /&gt;
+    &lt;/&gt;
   }
-                </xmp>
+                </pre>
               </div>  
             </li>
           </ol>
@@ -408,7 +408,7 @@ export default function ChildComponent() {
           <p>Using the <strong>useReducer</strong> hook, our React functional components can also dispatch actions to reducer functions that will run code and update a new copy of state based on the value of the action. An action is essentially just an object with a constant property, "type", that acts as the command sent to the reducer function optionally accompanied by an optional data payload. *By default react will pass the state to the dispatcher. but if you want to pass some data the you can add it in the object and pass that object to dispatch.</p>
           <p>For example, the below code demonstrates, again, a quintessential counter function. This time, however, it uses a reducer function to update the value of the count state depending on whether the user dispatches, by choosing a button to click, an "increment", "decrement", or "reset" action. Notice, as well, that the dispatch function expects its parameter to be an <strong>object</strong> type.</p>
           <div class="codecontainer">
-            <xmp>
+            <pre>
 import React, { useReducer } from 'react';
 
 const INCREMENT = "increment";
@@ -425,7 +425,7 @@ const reducer = (state = initialArg, action) => {
     case RESET:
       return 0;
     default:
-      <!-- throw new Error(); -->
+      &lt;!-- throw new Error(); --&gt;
       return state;
   }
 }
@@ -434,14 +434,14 @@ export default function Counter() {
 
   const [count, dispatch] = useReducer(reducer, initialArg)
 
-  return (<>
-    <div>Counter: {count}</div>
-    <button onClick={increment=> dispatch({ type: INCREMENT })}>INCREMENT</button>
-    <button onClick={decrement=> dispatch({ type: DECREMENT })}>DECREMENT</button>
-    <button onClick={reset=> dispatch({ type: RESET })}>RESET</button>
-  </>);
+  return (&lt;&gt;
+    &lt;div&gt;Counter: {count}&lt;/div&gt;
+    &lt;button onClick={increment =&gt; dispatch({ type: INCREMENT })}&gt;INCREMENT&lt;/button&gt;
+    &lt;button onClick={decrement =&gt; dispatch({ type: DECREMENT })}&gt;DECREMENT&lt;/button&gt;
+    &lt;button onClick={reset =&gt; dispatch({ type: RESET })}&gt;RESET&lt;/button&gt;
+  &lt;/&gt;);
 }
-          </xmp>
+          </pre>
         </div>
         <p>Sometimes, you will see a useReducer hook with three parameters instead of two. In addition to the reducer and the initialArg parameters is a third <strong>init function</strong>. 
         <div class="codecontainer">
@@ -451,7 +451,7 @@ export default function Counter() {
         </div>
         <p>We can create an init function and pass it as a parameter to the useReducer hook in order to create the initial state <strong>lazily</strong>, meaning that we can now calculate the initial state outside the reducer or reset it because of a certain action. We don't need to compute the initial state, that is, until it is needed. Notice in the code below how the reducer calls the init function in response to the "reset" action, which is calculated at that time only.</p>
         <div class="codecontainer">
-          <xmp>
+          <pre>
 function init(initialCount) {
   return {count: initialCount};
 }
@@ -472,25 +472,24 @@ function reducer(state, action) {
 function Counter({initialCount}) {
   const [state, dispatch] = useReducer(reducer, initialCount, init);
   return (
-    <>
+    &lt;&gt;
       Count: {state.count}
-      <button
-        onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+      &lt;button onClick={() =&gt; dispatch({type: 'reset', payload: initialCount})}&gt;
         Reset
-      </button>
-      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
-      <button onClick={() => dispatch({type: 'increment'})}>+</button>
-    </>
+      &lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({type: 'decrement'})}&gt;-&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({type: 'increment'})}&gt;+&lt;/button&gt;
+    &lt;/&gt;
   );
 }
 
 // Code sample from (Reactjs.org, n.d.)
-          </xmp>
+          </pre>
         </div>
         <p>useReducer is much like useState, except that it has a reducer function as an intermediary for when we need to change the state (Ceddia, 2018). Thus, instead of setting state directly, we can execute the dispatch function with any action, and the reducer will execute code based on the action it receives. The reducer will ultimately update the state and return it, and the state change will therefore cause a re-render.</p>
         <p>The useReducer hook, then, is often used instead of useState to manage state that is more complex that primitive values, such as nested objects and arrays. It is more suited to code where the state depends on the previous state, since that is received by the reducer function.</p>
         <div class="codecontainer">
-          <xmp>
+          <pre>
 const [state, dispatch] = React.useReducer(
   fetchUsersReducer,
   {
@@ -502,7 +501,7 @@ const [state, dispatch] = React.useReducer(
     error: false,
   },
 );
-          </xmp>
+          </pre>
         </div>
         <p>The code above shows a state with a complicated shape. If any parameters depend on each other, also, the useReducer hook allows us to encapsulate everything nicely into the single reducer function.</p>
         <p>Finally, since a reducer is a pure function that always returns the same output for the same input parameters with zero side effects, it is suited for testing, since it does not depend on React (Spukas, 2019).</p>
@@ -514,10 +513,10 @@ const [state, dispatch] = React.useReducer(
           <header>useCallback</header>
           <p>When you have a child component that needs to re-render often, all its functions will reinstantiate as well, even those that handle a different state variable than the one that changed. Although this might not be a big deal in a smaller component, it can cause a performance hit in a more complex component that has multiple state values. If one state value is changed, it should only cause functions that access it to reinstantiate, and leave functions that do not alone, yet this is not the case. In the example code below, updating the value of the "count1" state will cause a re-render that recreates <strong>all</strong> functions in the component, including <strong>both</strong> functions that don't even concern count1. The incrementCount2 and decrementCount2 functions are for count2 only, but are recreated anyway when count1 is updated.</p>
           <div class="codecontainer">
-            <xmp>
+            <pre>
 import React, { useState } from "react";
 
-const Counter = () => {
+const Counter = () =&gt; {
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
 
@@ -542,27 +541,27 @@ const Counter = () => {
   };
 
   return (
-    <>
-      Count1: {count1} <br />
-      Count2: {count2} <br />
-      <button onClick={incrementCount1}>Increment count1</button>
-      <button onClick={decrementCount1}>Decrement count1</button>
-      <button onClick={incrementCount2}>Increment count2</button>
-      <button onClick={decrementCount2}>Decrement count2</button>
-    </>
+    &lt;&gt;
+      Count1: {count1} &lt;br /&gt;
+      Count2: {count2} &lt;br /&gt;
+      &lt;button onClick={incrementCount1}&gt;Increment count1&lt;/button&gt;
+      &lt;button onClick={decrementCount1}&gt;Decrement count1&lt;/button&gt;
+      &lt;button onClick={incrementCount2}&gt;Increment count2&lt;/button&gt;
+      &lt;button onClick={decrementCount2}&gt;Decrement count2&lt;/button&gt;
+    &lt;/&gt;
   );
 };
 
 export default Counter;                
-            </xmp>
+            </pre>
           </div>
           <p>To solve the problem, and make it so that we don't recreate functions in a re-render that do not concern the state value that was updated, we can use the useCallback hook to <strong>memoize</strong> a function's callback so it only changes if one of its inputs changes (Noring, n.d.).</p>
           <p>All we need to do is wrap each of the functions with a useCallback that has an array for its second parameter that includes any state values that should cause the function to be recreated when the component re-renders.</p>
           <div class="codecontainer">
-              <xmp>
+              <pre>
 import React, { useState } from "react";
 
-const Counter = () => {
+const Counter = () =&gt; {
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
 
@@ -589,19 +588,19 @@ const Counter = () => {
   }, [count2]);
 
   return (
-    <>
-      Count1: {count1} <br />
-      Count2: {count2} <br />
-      <button onClick={incrementCount1}>Increment count1</button>
-      <button onClick={decrementCount1}>Decrement count1</button>
-      <button onClick={incrementCount2}>Increment count2</button>
-      <button onClick={decrementCount2}>Decrement count2</button>
-    </>
+    &lt;&gt;
+      Count1: {count1} &lt;br /&gt;
+      Count2: {count2} &lt;br /&gt;
+      &lt;button onClick={incrementCount1}&gt;Increment count1&lt;/button&gt;
+      &lt;button onClick={decrementCount1}&gt;Decrement count1&lt;/button&gt;
+      &lt;button onClick={incrementCount2}&gt;Increment count2&lt;/button&gt;
+      &lt;button onClick={decrementCount2}&gt;Decrement count2&lt;/button&gt;
+    &lt;/&gt;
   );
 };
 
 export default Counter;
-              </xmp>
+              </pre>
             </div>
             <p>Now, with each call wrapped in useCallback, the functions will only be reinstantiated when the state values specified in the second parameter array are changed, thus optimizing performance.</p>
         </section>
