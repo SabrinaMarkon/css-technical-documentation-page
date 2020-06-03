@@ -199,7 +199,7 @@ export default function ComponentWithRefInstanceVariable() {
 // Code example (Wieruch, 2020). 
             </pre>
           </div>
-          <p>The useRef hook is frequently used with DOM elements in order to get their values out without having to store them in state. The useRef hook contains a reference to a DOM node which we can then access directly.</p>
+          <p>The useRef hook is frequently used with DOM elements in order to get their values out without having to store them in state. The useRef hook contains a reference to a DOM node which we can then access directly. This is the React way of accessing an HTML element instead of using things like getElementById.</p>
           <p>In the below code example, you can see how we can make a useRef object we name inputRef, and pass inputRef to the ref attribute of a text input field. Now, we can access the value of the text field with the inputRef object's <strong>current</strong> property, <strong>inputRef.current</strong>.</p>
           <div class="codecontainer">
             <pre>
@@ -235,6 +235,7 @@ export default function ComponentWithRefInstanceVariable() {
           </div>
           <p>Observe that while we can log the inputRef to the console or change styles, a change in value that we type is <strong>not</strong> updated in the DOM (where we have &lt;p&gt;{inputRef.current.value}&lt;/p&gt;).</p>
           <p> That is, we cannot see the changes to value in the DOM, and get an error when the component loads if we try to access it, if the initial value is undefined. If the initial state is <strong>not</strong> undefined, we still see nothing in the DOM.</p>
+          
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
@@ -704,6 +705,10 @@ export default Counter;
         <p class="reference">Spukas, L. (2019, August 18). 3 Reasons to useReducer() over useState(). Retrieved from
           <a href="https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad" target="_blank">
             https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad</a>
+        </p>
+        <p class="reference">"techsith" (YouTube.com), L. (2019, July 15). React Hook useRef and forwarding refs with forwardRef. Retrieved from
+          <a href="https://www.youtube.com/watch?v=ScT4ElKd6eo" target="_blank">
+            https://www.youtube.com/watch?v=ScT4ElKd6eo</a>
         </p>
         <p class="reference">Wieruch, R. (2020, April 25). How to use React Ref. Retrieved from
           <a href="https://www.robinwieruch.de/react-ref" target="_blank">
