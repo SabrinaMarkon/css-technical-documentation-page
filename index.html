@@ -203,6 +203,7 @@ export default function ComponentWithRefInstanceVariable() {
           <p>In the below code example, you can see how we can make a useRef object we name inputRef, and pass inputRef to the ref attribute of a text input field. Now, we can access the value of the text field with the inputRef object's <strong>current</strong> property, <strong>inputRef.current</strong>.</p>
           <div class="codecontainer">
             <pre>
+  // ComponentWithRefForDOMElement component.
   import React, { useRef } from 'react';
   export default function ComponentWithRefForDOMElement() {
 
@@ -216,7 +217,7 @@ export default function ComponentWithRefInstanceVariable() {
 
       // Will log which DOM node inputRef refers to, along with its attributes, 
       // including name, id, style, etc. if present.
-      console.log(inputRef.current); // &lt;input name="wow" id="lol" style="color: red;"&gt;
+      console.log(inputRef.current); // &lt;input type="text" id="lol" style="color: red;"&gt;
 
       // Changes the style of the inputRef's text to blue!
       inputRef.current.style = "color: blue";
@@ -226,7 +227,7 @@ export default function ComponentWithRefInstanceVariable() {
       &lt;&gt;
         {/* &lt;p&gt;{inputRef.current.value}&lt;/p&gt; */}
         &lt;form onSubmit={onSubmit}&gt;
-          &lt;input id="hi" name="ho" style={{ color: "red" }} ref={inputRef} /&gt;
+          &lt;input type="text" id="lol" style={{ color: "red" }} ref={inputRef} /&gt;
         &lt;/form&gt;
       &lt;/&gt;
     );
@@ -235,7 +236,58 @@ export default function ComponentWithRefInstanceVariable() {
           </div>
           <p>Observe that while we can log the inputRef to the console or change styles, a change in value that we type is <strong>not</strong> updated in the DOM (where we have &lt;p&gt;{inputRef.current.value}&lt;/p&gt;).</p>
           <p> That is, we cannot see the changes to value in the DOM, and get an error when the component loads if we try to access it, if the initial value is undefined. If the initial state is <strong>not</strong> undefined, we still see nothing in the DOM.</p>
-          
+          <p><strong>forwardRef:</strong></p>
+          <p>Above, we only need to include the useRef hook by adding the ref attribute to the input field (the ref={inputRef} part), but what do we do when the DOM nodes we need to access are in a child component instead? That is, how would we access the input field in a case like this, where the input field is actually inside a child component instead of directly in the return statement of the ComponentWithRefForDOMElement component?</p>
+          <div class="codecontainer">
+            <pre>
+  // ComponentWithRefForDOMElement component.
+  import React, { useRef } from 'react';
+  import ChildComponentWithTheInputField from './ChildComponentWithTheInputField';
+  export default function ComponentWithRefForDOMElement() {
+
+    const inputRef = useRef();
+   
+    function onSubmit(event) {
+      event.preventDefault();
+
+      // Will log the current value of the text field to the console.
+      console.log(inputRef.current.value); // whatever you've typed in the field.
+
+      // Will log which DOM node inputRef refers to, along with its attributes, 
+      // including name, id, style, etc. if present.
+      console.log(inputRef.current); // &lt;input type="text" id="lol" style="color: red;"&gt;
+
+      // Changes the style of the inputRef's text to blue!
+      inputRef.current.style = "color: blue";
+    }
+    
+    return (
+      &lt;&gt;
+        {/* &lt;p&gt;{inputRef.current.value}&lt;/p&gt; */}
+        &lt;form onSubmit={onSubmit}&gt;
+          &lt;ChildComponentWithTheInputField id="lol" style={{ color: "red" }} ref={inputRef} /&gt;
+        &lt;/form&gt;
+      &lt;/&gt;
+    );
+  } 
+
+  ////////////////////////////////////////////////////////////////////
+
+  // ChildComponentWithTheInputField
+  import React from 'react';
+
+  const ChildComponentWithTheInputField = () => {
+    return (
+      &lt;input /&gt;
+    );
+  }
+            </pre>
+          </div>
+          <p>See how we have "ChildComponentWithTheInputField" in the parent component's (ComponentWithRefForDOMElement) return statement instead of &lt;input type="text" id="lol" style={{ color: "red" }} ref={inputRef} /&gt;? How do we use refs in this situation to access the input DOM node? we don't have access to the references directly!</p>
+          <p></p>
+
+
+
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
