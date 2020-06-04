@@ -153,6 +153,7 @@ export default Counter;
           <div class="codecontainer">
             <pre>
 import React, { useState, useRef, useEffect } from 'react';
+
 export default function ComponentWithRefInstanceVariable() {
   const [count, setCount] = useState(0);
  
@@ -205,6 +206,7 @@ export default function ComponentWithRefInstanceVariable() {
             <pre>
   // ComponentWithRefForDOMElement component.
   import React, { useRef } from 'react';
+
   export default function ComponentWithRefForDOMElement() {
 
     const inputRef = useRef();
@@ -242,7 +244,9 @@ export default function ComponentWithRefInstanceVariable() {
             <pre>
   // ComponentWithRefForDOMElement component.
   import React, { useRef } from 'react';
+
   import ChildComponentWithTheInputField from './ChildComponentWithTheInputField';
+
   export default function ComponentWithRefForDOMElement() {
 
     const inputRef = useRef();
@@ -281,13 +285,31 @@ export default function ComponentWithRefInstanceVariable() {
       &lt;input /&gt;
     );
   }
+  
+  export default ChildComponentWithTheInputField;
+
             </pre>
           </div>
           <p>See how we have "ChildComponentWithTheInputField" in the parent component's (ComponentWithRefForDOMElement) return statement instead of &lt;input type="text" id="lol" style={{ color: "red" }} ref={inputRef} /&gt;? How do we use refs in this situation to access the input DOM node? we don't have access to the references directly!</p>
-          <p></p>
+          <p>Well, it turns out that all we have to do is pass the ref as another parameter to the child component after the props (either as ...props or destructured below as {type, id, style}), then we can include the ref in the atttributes of the input field in the child component's (ChildComponentWithTheInputField) return statement.</p>
+          <p>Then, we create a constant of the child component that we export as a forwarded ref instead of the child component directly.</p>
+          <div class="codecontainer">
+              <pre>
+    // ChildComponentWithTheInputField
+    import React from 'react';
+  
+    const ChildComponentWithTheInputField = ({type, id, style}, ref) => {
+      return (
+        &lt;input ref={ref} type={type} id={id} style={style} /&gt;
+      );
+    }
 
+    const forwardedChildComponentRef = React.forwardRef(ChildComponentWithTheInputField);
 
-
+    export default forwardedChildComponentRef;
+              </pre>
+          </div>
+          <p>Thus, forwardRef is just when we need to forward a reference into a component. Nothing needs to change in the parent component, and all we need to do in the child is to add a ref parameter and create a forwardRef version of the child component to export for use in other components (such as the parent).</p>
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
