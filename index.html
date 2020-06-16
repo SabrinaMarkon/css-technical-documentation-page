@@ -735,7 +735,15 @@ export default Counter;
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
-          <p></p>
+          <p>The useDebugValue is a hook that is simply meant to make debugging custom hooks easier by giving them each a custom name. That way, when an error occurs we can
+            see the custom name in the DevTools stack trace, which makes it far easier to find the problem in our code.</p>
+          <p>Since there is a performance overhead in using it, however, it is recommended not to use it for all custom hooks, but only those that need to be inspected, and usually
+            are part of a shared library.</p>
+            <div class="codecontainer">
+              <code>
+                useDebugValue(value);
+              </code>
+            </div>
           <p></p>
           <code></code>
           <ul>
