@@ -724,14 +724,9 @@ export default Counter;
         </section>
         <section class="main-section" id="useLayoutEffect">
           <header>useLayoutEffect</header>
-          <p></p>
-          <p></p>
-          <code></code>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+          <p>In class-based React apps, we used lifecycle methods instead of hooks. For example, we could control the program using componentDidMount or componentDidUpdate. People familiar with coding classes tend to look for hooks that can substitute for lifecycle methods, and for componentDidMount and componentDidUpdate, hope that the useEffect hook will realize this goal. The useEffect hook, however, works differently in an important way.</p>
+          <p>Although useEffect does indeed run after a state change, its code is non-blocking, so other code coming after it will continue to run rather than wait for the useEffect code to complete. When someone is accustomed to lifecycle methods like componentDidMount, they might be surprised by useEffect's asynchronous behavior and when state values are updated. React hooks make the developer think about their code asyncronously, which results in better, more efficient code.</p>
+          <p>Although most effects can run asynchronously, there are some cases that synchronous code might be needed, and in this case we have the useLayoutEffect React hook to use in place of useEffect.</p>
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
