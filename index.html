@@ -726,8 +726,15 @@ export default Counter;
           <header>useLayoutEffect</header>
           <p>In class-based React apps, we used lifecycle methods instead of hooks. For example, we could control the program using componentDidMount or componentDidUpdate. People familiar with coding classes tend to look for hooks that can substitute for lifecycle methods, and for componentDidMount and componentDidUpdate, hope that the useEffect hook will realize this goal. The useEffect hook, however, works differently in an important way.</p>
           <p>Although useEffect, like componentDidMount or componentDidUpdate, also runs after a state change, its code is <strong>non-blocking</strong>, so other code coming after it will continue to run rather than wait for the useEffect code to complete. When someone is accustomed to lifecycle methods like componentDidMount that <strong>block</strong>, they might be surprised by useEffect's asynchronous behavior and when state values are updated. React hooks make the developer think about their code asyncronously, which results in better, more efficient code.</p>
-          <p>Although most effects can run asynchronously, there are some cases that synchronous code might be needed, such as for measuring layout DOM nodes for instance. In cases like these, then, we have the useLayoutEffect React hook to use in place of useEffect.</p>
+          <p>Although most effects can run asynchronously, there are some cases that synchronous code might be needed, such as for measuring layout, scroll position, or element styles. In cases like these where we need the effect to update the DOM before it is painted, we have the useLayoutEffect React hook to use in place of useEffect. This behaves more like componentDidMount or componentDidUpdate.</p>
+          <p> The useLayoutEffect hook runs <strong>after</strong> the DOM is updated with any new mutations, but <strong>before</strong> the browser has repainted them, so the user sees the latest view. In contrast, since the useEffect hook is asynchronous, the browser may have already been repainted before the effect code has completed, and the user will likely see a view that is one state behind.</p>
           <p>The API for useLayoutEffect is <strong>the same</strong> as useEffect, but useLayoutEffect runs synchronously, preventing other code from running until the effects have finished executing.</p>
+          <div class="codecontainer">
+              <pre>
+              
+              </pre>
+            </div>
+            <p>Importantly, 99% of the time we should be able to use the useEffect hook, rather than blocking the code with useLayoutEffect.</p>
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
@@ -768,47 +775,52 @@ hooks
       </main>
     </div>
     <footer>
-        <header>References:</header>
-        <p class="reference">Bishard, E. (n.d.). The Guide to Learning React Hooks. Retrieved from 
-          <a href="https://www.telerik.com/kendo-react-ui/react-hooks-guide" target="_blank">
-            https://www.telerik.com/kendo-react-ui/react-hooks-guide</a>
-        </p>
-        <p class="reference">Ceddia, D. (2018, October 30). How to Use the useReducer Hook. Retrieved from 
-            <a href="https://daveceddia.com/usereducer-hook-examples" target="_blank">
-              https://daveceddia.com/usereducer-hook-examples</a>
-        </p>
-        <p class="reference">Ceddia, D. (2019, January 30). The useReducer Hook. Retrieved from 
-          <a href="https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo" target="_blank">
-            https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo</a>
-        </p>
-        <p class="reference">Copes, F. (2019, July 20). How to use the useMemo React hook. Retrieved from 
-          <a href="https://flaviocopes.com/react-hook-usememo" target="_blank">
-            https://flaviocopes.com/react-hook-usememo</a>
+      <header>References:</header>
+      <p class="reference">Bishard, E. (n.d.). The Guide to Learning React Hooks. Retrieved from
+        <a href="https://www.telerik.com/kendo-react-ui/react-hooks-guide" target="_blank">
+          https://www.telerik.com/kendo-react-ui/react-hooks-guide</a>
       </p>
-        <p class="reference">Copes, F. (2019, July 23). How to use the useReducer React hook. Retrieved from 
-            <a href="https://flaviocopes.com/react-hook-usereducer" target="_blank">
-              https://flaviocopes.com/react-hook-usereducer</a>
-        </p>
-        <p class="reference">ReactJS.org (n.d.). Hooks API Reference. Retrieved from
-          <a href="https://reactjs.org/docs/hooks-reference.html" target="_blank">
-            https://reactjs.org/docs/hooks-reference.html</a>
-        </p>
-        <p class="reference">Noring, C. (n.d.). React Book. Retrieved from
-          <a href="https://softchris.github.io/books/react" target="_blank">
-            https://softchris.github.io/books/react</a>
-        </p>
-        <p class="reference">Spukas, L. (2019, August 18). 3 Reasons to useReducer() over useState(). Retrieved from
-          <a href="https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad" target="_blank">
-            https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad</a>
-        </p>
-        <p class="reference">"techsith" (YouTube.com), L. (2019, July 15). React Hook useRef and forwarding refs with forwardRef. Retrieved from
-          <a href="https://www.youtube.com/watch?v=ScT4ElKd6eo" target="_blank">
-            https://www.youtube.com/watch?v=ScT4ElKd6eo</a>
-        </p>
-        <p class="reference">Wieruch, R. (2020, April 25). How to use React Ref. Retrieved from
-          <a href="https://www.robinwieruch.de/react-ref" target="_blank">
-            https://www.robinwieruch.de/react-ref</a>
-        </p> 
+      <p class="reference">Ceddia, D. (2018, October 30). How to Use the useReducer Hook. Retrieved from
+        <a href="https://daveceddia.com/usereducer-hook-examples" target="_blank">
+          https://daveceddia.com/usereducer-hook-examples</a>
+      </p>
+      <p class="reference">Ceddia, D. (2019, January 30). The useReducer Hook. Retrieved from
+        <a href="https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo" target="_blank">
+          https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo</a>
+      </p>
+      <p class="reference">Copes, F. (2019, July 20). How to use the useMemo React hook. Retrieved from
+        <a href="https://flaviocopes.com/react-hook-usememo" target="_blank">
+          https://flaviocopes.com/react-hook-usememo</a>
+      </p>
+      <p class="reference">Copes, F. (2019, July 23). How to use the useReducer React hook. Retrieved from
+        <a href="https://flaviocopes.com/react-hook-usereducer" target="_blank">
+          https://flaviocopes.com/react-hook-usereducer</a>
+      </p>
+      <p class="reference">Dodds, K. (2018, November 26). useEffect vs. useLayoutEffect. Retrieved from
+        <a href="https://kentcdodds.com/blog/useeffect-vs-uselayouteffect" target="_blank">
+          https://kentcdodds.com/blog/useeffect-vs-uselayouteffect</a>
+      </p>
+      <p class="reference">ReactJS.org (n.d.). Hooks API Reference. Retrieved from
+        <a href="https://reactjs.org/docs/hooks-reference.html" target="_blank">
+          https://reactjs.org/docs/hooks-reference.html</a>
+      </p>
+      <p class="reference">Noring, C. (n.d.). React Book. Retrieved from
+        <a href="https://softchris.github.io/books/react" target="_blank">
+          https://softchris.github.io/books/react</a>
+      </p>
+      <p class="reference">Spukas, L. (2019, August 18). 3 Reasons to useReducer() over useState(). Retrieved from
+        <a href="https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad" target="_blank">
+          https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad</a>
+      </p>
+      <p class="reference">"techsith" (YouTube.com), L. (2019, July 15). React Hook useRef and forwarding refs with
+        forwardRef. Retrieved from
+        <a href="https://www.youtube.com/watch?v=ScT4ElKd6eo" target="_blank">
+          https://www.youtube.com/watch?v=ScT4ElKd6eo</a>
+      </p>
+      <p class="reference">Wieruch, R. (2020, April 25). How to use React Ref. Retrieved from
+        <a href="https://www.robinwieruch.de/react-ref" target="_blank">
+          https://www.robinwieruch.de/react-ref</a>
+      </p>
     </footer>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
