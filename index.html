@@ -729,12 +729,44 @@ export default Counter;
           <p>Although most effects can run asynchronously, there are some cases that synchronous code might be needed, such as for measuring layout, scroll position, or element styles. In cases like these where we need the effect to update the DOM before it is painted, we have the useLayoutEffect React hook to use in place of useEffect. This behaves more like componentDidMount or componentDidUpdate.</p>
           <p> The useLayoutEffect hook runs <strong>after</strong> the DOM is updated with any new mutations, but <strong>before</strong> the browser has repainted them, so the user sees the latest view. In contrast, since the useEffect hook is asynchronous, the browser may have already been repainted before the effect code has completed, and the user will likely see a view that is one state behind.</p>
           <p>The API for useLayoutEffect is <strong>the same</strong> as useEffect, but useLayoutEffect runs synchronously, preventing other code from running until the effects have finished executing.</p>
+          <p>The timing of what happens with useEffect is like this, because it is asynchronous:</p>
+          <ul>
+            <li>The user interacts with the app in any way that changes state, such as clicking a button or typing in a form.</li>
+            <li>A re-render is triggered for the React component.</li>
+            <li>The screen is repainted.</li>
+            <li>Only now does useEffect run! This means that any state values that are updated in useEffect do not instantly appear on the screen.</li>
+          </ul>
+          <p>Consider the below code using the useEffect hook. When the number on the screen is clicked, it changes. Notice, however, that there is a brief flicker or flash of the text before it changes. That is, if you run the code and click the number on the screen, all digits are updated even if they are the same. You can see the change from a 5 into another 5, for instance. This is because useEffect runs <strong>after</strong> the render is painted to the browser window (see the steps above!).</p>
           <div class="codecontainer">
               <pre>
-              
+import React, { useLayoutEffect, useState } from "react";
+import ReactDOM from "react-dom";
+
+const Flickers = () => {
+  const [num, setNum] = useState(0);
+
+  useLayoutEffect(() => {
+    if (num === 0) {
+      setNum(Math.random());
+    }
+  }, [num]);
+
+  return (
+    &lt;div
+      onClick={() => setNum(0)}
+      style={{ fontSize: "4em", color: "seagreen" }}
+    &gt;
+      {num}
+    &lt;/div&gt;
+  );
+};
+
+ReactDOM.render(<Flickers />, document.querySelector("#root"));
+
+// (Ceddia, 2019)
               </pre>
             </div>
-            <p>Importantly, 99% of the time we should be able to use the useEffect hook, rather than blocking the code with useLayoutEffect.</p>
+            <p>Importantly, 99% of the time we should be able to use the useEffect hook, rather than blocking the code with useLayoutEffect. Because useLayoutEffect is synchronous, if the code it needs to run is slow, it can cause performance problems. The browser in this case would not be able to render the view for the user until the effect code has completed, and with slow code, this would be visible to the user.</p>
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
@@ -787,6 +819,10 @@ hooks
       <p class="reference">Ceddia, D. (2019, January 30). The useReducer Hook. Retrieved from
         <a href="https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo" target="_blank">
           https://www.youtube.com/watch?time_continue=1&v=sYDFCuZHrqw&feature=emb_logo</a>
+      </p>
+      <p class="reference">Ceddia, D. (2019, September 20). When to useLayoutEffect Instead of useEffect. Retrieved from
+        <a href="https://daveceddia.com/useeffect-vs-uselayouteffect" target="_blank">
+          https://daveceddia.com/useeffect-vs-uselayouteffect</a>
       </p>
       <p class="reference">Copes, F. (2019, July 20). How to use the useMemo React hook. Retrieved from
         <a href="https://flaviocopes.com/react-hook-usememo" target="_blank">
