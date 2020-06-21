@@ -739,13 +739,13 @@ export default Counter;
           <p>Consider the below code using the useEffect hook. When the number on the screen is clicked, it changes. Notice, however, that there is a brief flicker or flash of the text before it changes. That is, if you run the code and click the number on the screen, all digits are updated even if they are the same. You can see the change from a 5 into another 5, for instance. This is because useEffect runs <strong>after</strong> the render is painted to the browser window (see the steps above!).</p>
           <div class="codecontainer">
               <pre>
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 const Flickers = () => {
   const [num, setNum] = useState(0);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (num === 0) {
       setNum(Math.random());
     }
@@ -766,7 +766,43 @@ ReactDOM.render(<Flickers />, document.querySelector("#root"));
 // (Ceddia, 2019)
               </pre>
             </div>
-            <p>Importantly, 99% of the time we should be able to use the useEffect hook, rather than blocking the code with useLayoutEffect. Because useLayoutEffect is synchronous, if the code it needs to run is slow, it can cause performance problems. The browser in this case would not be able to render the view for the user until the effect code has completed, and with slow code, this would be visible to the user.</p>
+            <p>In contrast, the block of code below is the <strong>same</strong> as the above, but uses the useLayoutEffect hook instead of useEffect. When you click the number on the screen with this code, there is no flicker or flash of the whole thing changing, because only the digits that are different change. The useLayoutEffect hook, again, is synchronous, so follows similar steps to the useEffect hook, except for an important difference. Steps 3 and 4 here are essentially reversed here:</p>
+            <ul>
+              <li>The user interacts with the app in any way that changes state, such as clicking a button or typing in a form.</li>
+              <li>A re-render is triggered for the React component.</li>
+              <li>useEffect runs now! React can't continue on to repaint the screen or anything else until the code in useLayoutEffect has completed, so state updates inside useLayoutEffect will be applied when the scrren is repainted.</li>
+              <li>The screen is repainted.</li>
+            </ul>
+            <div class="codecontainer">
+              <pre>
+import React, { useLayoutEffect, useState } from "react";
+import ReactDOM from "react-dom";
+
+const NoFlicker = () => {
+  const [num, setNum] = useState(0);
+
+  useLayoutEffect(() => {
+    if (num === 0) {
+      setNum(Math.random());
+    }
+  }, [num]);
+
+  return (
+    &lt;div
+      onClick={() => setNum(0)}
+      style={{ fontSize: "4em", color: "coral" }}
+    &gt;
+      {num}
+    &lt;/div&gt;
+  );
+};
+
+ReactDOM.render(<NoFlicker />, document.querySelector("#root"));
+
+// (Ceddia, 2019)
+              </pre>
+            </div>
+            <p>Importantly, 99% of the time we should be able to use the useEffect hook, rather than blocking the code with useLayoutEffect. Because useLayoutEffect is synchronous, if the code it needs to run is slow, it can cause <strong>performance problems</strong>. The browser in this case would not be able to render the view for the user until the effect code has completed, and with slow code, this would be visible to the user.</p>
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
