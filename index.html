@@ -713,14 +713,29 @@ export default Counter;
         </section>
         <section class="main-section" id="useImperativeHandle">
           <header>useImperativeHandle</header>
-          <p>While the useImperativeHandle hook is not used often, it is available if we run across a situation where a child component's ref needs to be passed to its parent component to use. For example, a parent component may need to control focusing on an input that lives in a child component, or control scrolling in a child component. The useImperativeHandle hook needs to be used with forwardRef. In fact, useImperativeHandle behaves much like useRef, in that it allows you to interact with a particular DOM element directly.</p>
-          <p></p>
-          <code></code>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+          <p>While the useImperativeHandle hook is not used often, it is available if we run across a situation where a child component's ref needs to be passed to its parent component to use. For example, a parent component may need to control focusing on an input that lives in a child component, or control scrolling in a child component. The useImperativeHandle hook needs to be used with <strong>forwardRef</strong>. In fact, useImperativeHandle behaves much like useRef, in that it allows you to interact with a particular DOM element directly.</p>
+          <p>Unlike useRef, however, which returns the instance element of the DOM node, useImperativeHandle allows you to control what value is returned instead of the instance element itself. Moreover, it allows you to define new functions to replace native functions, such as focus() or blur().</p>
+          <div class="codecontainer">
+            <code>
+                useImperativeHandle(ref, createHandle, [deps]);
+            </code>
+          </div>
+          <p>The React documentation provides the below code as an example, which clearly demonstrates how useImperative allows you to change the behavior of focus() to use your own side-effects instead of the native browser focus(). Any <strong>parent</strong> component that has FancyInput below as its child, like &lt;FancyInput ref={inputRef} /&gt; could call FancyInput's inputRef.current.focus().</p>
+          <div class="codecontainer">
+              <pre>
+import React, { useRef, useImperativeHandle, forwardRef } from 'react';
+function FancyInput(props, ref) {
+  const inputRef = useRef();
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current.focus();
+    }
+  }));
+  return &lt;input ref={inputRef} ... /&gt;;
+}
+FancyInput = forwardRef(FancyInput);
+              </pre>
+            </div>
         </section>
         <section class="main-section" id="useLayoutEffect">
           <header>useLayoutEffect</header>
