@@ -95,9 +95,9 @@ export default Counter;
         </section>
         <section class="main-section" id="useRef">
           <header>useRef</header>
-          <p>useRef is a hook that mutates the current value of a variable that we can optionally initialize with an initial value, or leave undefined.
+          <p><strong>useRef</strong> is a hook that mutates the current value of a variable that we can optionally initialize with an initial value, or leave undefined.
           Its major difference to the useState hook is that it only updates the value of the variable, but does <strong>not</strong>
-          update state. Consequently, useRef does <strong>not</strong> cause a re-render like useState does, and we can use it when storing a value in state is not wanted or necessary.</p>
+          update state. Consequently, useRef does <strong>not</strong> cause a re-render like useState does, and we can use it when storing a value in state is neither wanted or necessary.</p>
           <p>We create a <strong>ref</strong> for a React functional component like this:</p>
           <div class="codecontainer">
             <code>
@@ -313,7 +313,7 @@ export default function ComponentWithRefInstanceVariable() {
         </section>
         <section class="main-section" id="useEffect">
           <header>useEffect</header>
-          <p>When we update state, many apps also need to execute side-effects, such as making API calls, communicating with a database, or updating local storage. Since state causes re-renders, we can use the useEffect hook to run our side-effect every time I render or re-render occurs, or just when a certain state value is updated.</p>
+          <p>When we update state, many apps also need to execute side-effects, such as making API calls, communicating with a database, or updating local storage. Since state causes re-renders, we can use the <strong>useEffect</strong> hook to run our side-effect every time I render or re-render occurs, or just when a certain state value is updated.</p>
           <p>useEffect has a second argument, which when left out, defaults to mean that the side-effect code should execute every time any state value is changed. When this parameter is provided to useEffect, though, we can change when it runs.</p>
           <ol>
             <li>
@@ -402,7 +402,7 @@ export default function useEffectExample() {
         </section>
         <section class="main-section" id="useContext">
           <header>useContext</header>
-          <p>The React useContext hook is used in combination with the React Context API.</p>
+          <p>The React <strong>useContext</strong> hook is used in combination with the React Context API.</p>
           <p>Without using Context in React, props that need to be shared between components are passed as attributes from parent to child to child's child, etc. In addition, functions that update the same values are also passed to child components by the parent as attributes that the child component can use to pass updated props back to the parent.</p>
           <p>As you might guess, if the React tree has many levels of parent and child components, this process could become more error prone and unwieldy. It can be hard to keep track of which props are available to a given component, for instance, and code repetition, such as of attributes and functions that pass to the next parent up the tree, makes code less readable. Moreover, some of the components in the process might not even need access to the prop but have to handle it anyway.</p>
           <p>So, instead of "prop drilling" through multiple levels in a React component tree, we can use the <strong>Context API</strong> and the <strong>useContext</strong> hook to allow prop values to be shared easily between components, without having to explicitly pass them as variables through every level. The steps are actually quite straightforward!</p>
@@ -636,7 +636,7 @@ const Counter = () =&gt; {
 export default Counter;                
             </pre>
           </div>
-          <p>To solve the problem, and make it so that we don't recreate functions in a re-render that do not concern the state value that was updated, we can use the useCallback hook to <strong>memoize</strong> a function's callback so it only changes if one of its inputs changes (Noring, n.d.).</p>
+          <p>To solve the problem, and make it so that we don't recreate functions in a re-render that do not concern the state value that was updated, we can use the <strong>useCallback</strong> hook to <strong>memoize</strong> a function's callback so it only changes if one of its inputs changes (Noring, n.d.).</p>
           <p>All we need to do is wrap each of the functions with a useCallback that has an array for its second parameter that includes any state values that should cause the function to be recreated when the component re-renders.</p>
           <div class="codecontainer">
               <pre>
@@ -687,7 +687,7 @@ export default Counter;
         </section>
         <section class="main-section" id="useMemo">
           <header>useMemo</header>
-          <p>Although the useCallback and useMemo React hooks seem similar, while useCallback is used to create a memoized <strong>callback function</strong> to child components, the purpose of useMemo, in contrast, is to create a memoized <strong>value</strong>.</p>
+          <p>Although the useCallback and <strong>useMemo</strong> React hooks seem similar, while useCallback is used to create a memoized <strong>callback function</strong> to child components, the purpose of useMemo, in contrast, is to create a memoized <strong>value</strong>.</p>
           <p>When an operation is computationally expensive or slow, a memoized value means that after it is calculated once, the value is cached so that next time we need it, we don't need to perform the expensive calculation again, and can instead used the cached version. In other words, if the inputs have not changed, neither should the output, therefore it does not need to be re-calculated using an expensive function.</p>
           <p>To use the useMemo hook, we need to pass it two parameters, a function (the slow, costly one) that creates the value we want to be memoized, and an array of parameters that if they change, trigger the function to run again to re-calculate the memoized value. If none of the parameters in the array change, the function does not need to run since the value should not be changed, which optimizes our code. Every parameter for the callback function that calculates the memoized value should be included in the array, since that is what the array items represent (ReactJS.org, n.d.).</p>
           <div class="codecontainer">
@@ -713,7 +713,7 @@ export default Counter;
         </section>
         <section class="main-section" id="useImperativeHandle">
           <header>useImperativeHandle</header>
-          <p>While the useImperativeHandle hook is not used often, it is available if we run across a situation where a child component's ref needs to be passed to its parent component to use. For example, a parent component may need to control focusing on an input that lives in a child component, or control scrolling in a child component. The useImperativeHandle hook needs to be used with <strong>forwardRef</strong>. In fact, useImperativeHandle behaves much like useRef, in that it allows you to interact with a particular DOM element directly.</p>
+          <p>While the <strong>useImperativeHandle</strong> hook is not used often, it is available if we run across a situation where a child component's ref needs to be passed to its parent component to use. For example, a parent component may need to control focusing on an input that lives in a child component, or control scrolling in a child component. The useImperativeHandle hook needs to be used with <strong>forwardRef</strong>. In fact, useImperativeHandle behaves much like useRef, in that it allows you to interact with a particular DOM element directly.</p>
           <p>Unlike useRef, however, which returns the instance element of the DOM node, useImperativeHandle allows you to control what value is returned instead of the instance element itself. Moreover, it allows you to define new functions to replace native functions, such as focus() or blur().</p>
           <div class="codecontainer">
             <code>
@@ -734,14 +734,16 @@ function FancyInput(props, ref) {
   return &lt;input ref={inputRef} ... /&gt;;
 }
 FancyInput = forwardRef(FancyInput);
+
+// (ReactJS.org, n.d.)
               </pre>
             </div>
         </section>
         <section class="main-section" id="useLayoutEffect">
           <header>useLayoutEffect</header>
-          <p>In class-based React apps, we used lifecycle methods instead of hooks. For example, we could control the program using componentDidMount or componentDidUpdate. People familiar with coding classes tend to look for hooks that can substitute for lifecycle methods, and for componentDidMount and componentDidUpdate, hope that the useEffect hook will realize this goal. The useEffect hook, however, works differently in an important way.</p>
+          <p>In class-based React apps, we used lifecycle methods instead of hooks. For example, we could control the program using componentDidMount or componentDidUpdate. People familiar with coding classes tend to look for hooks that can substitute for lifecycle methods, and for componentDidMount and componentDidUpdate, hope that the useEffect hook will realize this goal. The useEffect hook, however, works differently than componentDidMount/componentDidUpdate in an important way.</p>
           <p>Although useEffect, like componentDidMount or componentDidUpdate, also runs after a state change, its code is <strong>non-blocking</strong>, so other code coming after it will continue to run rather than wait for the useEffect code to complete. When someone is accustomed to lifecycle methods like componentDidMount that <strong>block</strong>, they might be surprised by useEffect's asynchronous behavior and when state values are updated. React hooks make the developer think about their code asyncronously, which results in better, more efficient code.</p>
-          <p>Although most effects can run asynchronously, there are some cases that synchronous code might be needed, such as for measuring layout, scroll position, or element styles. In cases like these where we need the effect to update the DOM before it is painted, we have the useLayoutEffect React hook to use in place of useEffect. This behaves more like componentDidMount or componentDidUpdate.</p>
+          <p>Although most effects can run asynchronously, there are some cases that synchronous code might be needed, such as for measuring layout, scroll position, or element styles. In cases like these where we need the effect to update the DOM before it is painted, we have the <strong>useLayoutEffect</strong> React hook to use in place of useEffect. This behaves more like componentDidMount or componentDidUpdate.</p>
           <p> The useLayoutEffect hook runs <strong>after</strong> the DOM is updated with any new mutations, but <strong>before</strong> the browser has repainted them, so the user sees the latest view. In contrast, since the useEffect hook is asynchronous, the browser may have already been repainted before the effect code has completed, and the user will likely see a view that is one state behind.</p>
           <p>The API for useLayoutEffect is <strong>the same</strong> as useEffect, but useLayoutEffect runs synchronously, preventing other code from running until the effects have finished executing.</p>
           <p>The timing of what happens with useEffect is like this, because it is asynchronous:</p>
@@ -821,7 +823,7 @@ ReactDOM.render(<NoFlicker />, document.querySelector("#root"));
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
-          <p>The useDebugValue is a hook that is simply meant to make debugging custom hooks easier by giving them custom names that show in the React DevTools browser extension. 
+          <p>The <strong>useDebugValue</strong> is a hook that is simply meant to make debugging custom hooks easier by giving them custom names that show in the React DevTools browser extension. 
             That way, when an error occurs we can see the custom name in the DevTools stack trace, which makes it far easier to find the problem in our code.</p>
           <p>The useDebugValue hook is <strong>only</strong> executed when both the React DevTools extension is open in the browser, and the custom hook related to the useDebugValue 
             is being inspected by the developer. Because the function passed to useDebugValue does not run except under these circumstances, the function has no performance impact when
