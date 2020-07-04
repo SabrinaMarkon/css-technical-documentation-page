@@ -476,7 +476,8 @@ export default function ChildComponent() {
         </section>
         <section class="main-section" id="useReducer">
           <header>useReducer</header>
-          <p>A reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "reducer" comes from the fact that the reducer function receives two values, an action and the current state object. It then "reduces" these two values into one that it returns as the new state. To help remember the concept of a reducer, think of the Array reduce method that accepts 1) an accumulator and 2) each item of the array, to reduce an array to a single value. This pattern is what Redux uses to provide access to state variables from React components. Ultimately, a reducer takes in an action and a previous state value, and returns a new state.</p>
+          <p>To understand the <strong>useReducer</strong> React hook, it helps to first understand what a <strong>reducer</strong> actually is.</p>
+          <p>First, a reducer is a function that executes code to update global state values depending on an action that is sent (dispatched) to it as a parameter. The name "reducer" comes from the fact that the reducer function receives two values, an action and the current state object. Next, it "reduces" these two values into one that it returns as the new state. To help remember the concept of a reducer, think of the Array reduce method that accepts 1) an accumulator and 2) each item of the array, to reduce an array to a single value. This pattern is what Redux uses to provide access to state variables from React components. Ultimately, a reducer takes in an action and a previous state value, then returns a new state.</p>
           <p>There are several important rules for a reducer function to follow:</p>
           <ul>
             <li>The code inside the reducer function should never mutate its arguments, which are the current state and the dispatched action. To return a new state, a copy of the original should be made first.</li>
@@ -484,8 +485,8 @@ export default function ChildComponent() {
             <li>As well, any functions that the reducer calls within its code should always be pure functions themselves. That is, their output should only depend on their input. For example, Date.now() or Math.random() are <strong>not</strong> pure functions.</li>
           </ul>
           <p>(Copes, 2019)</p>
-          <p>Using the <strong>useReducer</strong> hook, our React functional components can also dispatch actions to reducer functions that will run code and update a new copy of state based on the value of the action. An action is essentially just an object with a constant property, "type", that acts as the command sent to the reducer function optionally accompanied by an optional data payload. *By default react will pass the state to the dispatcher. but if you want to pass some data the you can add it in the object and pass that object to dispatch.</p>
-          <p>For example, the below code demonstrates, again, a quintessential counter function. This time, however, it uses a reducer function to update the value of the count state depending on whether the user dispatches, by choosing a button to click, an "increment", "decrement", or "reset" action. Notice, as well, that the dispatch function expects its parameter to be an <strong>object</strong> type.</p>
+          <p>Using the useReducer hook, our React functional components can also dispatch actions to reducer functions that will run code and update a new copy of state based on the value of the action. An action is essentially just an object with a constant property, "type", that acts as the command sent to the reducer function <strong>optionally</strong> accompanied by an data payload. By default react will pass the state to the dispatcher. but if you want to pass some data the you can add it in the object and pass that object to dispatch.</p>
+          <p>For example, the below code demonstrates, again, our quintessential counter function. This time, however, it uses a reducer function to update the value of the count state depending on whether the user dispatches an "increment", "decrement", or "reset" action when they choose to click a button. Notice, as well, that the dispatch function expects its parameter to be an <strong>object</strong> type.</p>
           <div class="codecontainer">
             <pre>
 import React, { useReducer } from 'react';
@@ -524,7 +525,7 @@ export default function Counter() {
 }
           </pre>
         </div>
-        <p>Sometimes, you will see a useReducer hook with three parameters instead of two. In addition to the reducer and the initialArg parameters is a third <strong>init function</strong>. 
+        <p>Sometimes, you will see a useReducer hook with **three parameters instead of two**. In addition to the reducer and the initialArg parameters is a third <strong>init function</strong>. 
         <div class="codecontainer">
           <code>
             const [state, dispatch] = useReducer(reducer, initialArg, init);
@@ -567,8 +568,8 @@ function Counter({initialCount}) {
 // Code sample from (Reactjs.org, n.d.)
           </pre>
         </div>
-        <p>useReducer is much like useState, except that it has a reducer function as an intermediary for when we need to change the state (Ceddia, 2018). Thus, instead of setting state directly, we can execute the dispatch function with any action, and the reducer will execute code based on the action it receives. The reducer will ultimately update the state and return it, and the state change will therefore cause a re-render.</p>
-        <p>The useReducer hook, then, is often used instead of useState to manage state that is more complex that primitive values, such as nested objects and arrays. It is more suited to code where the state depends on the previous state, since that is received by the reducer function.</p>
+        <p>useReducer is much like useState, except that it has a reducer function as an <strong>intermediary</strong> for when we need to change the state (Ceddia, 2018). Thus, instead of setting state directly, we can execute the dispatch function with any action, and the reducer will execute code based on the action it receives. The reducer will ultimately update the state and return it, and the state change will therefore cause a re-render.</p>
+        <p>TThe useReducer hook, then, is often used instead of useState to manage state that is more complex than primitive values, such as nested objects and arrays. It is more suited to code where the state depends on the previous state, since that is received by the reducer function.</p>
         <div class="codecontainer">
           <pre>
 const [state, dispatch] = React.useReducer(
