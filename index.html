@@ -593,7 +593,10 @@ const [state, dispatch] = React.useReducer(
         </section>
         <section class="main-section" id="useCallback">
           <header>useCallback</header>
-          <p>When you have a child component that needs to re-render often, all its functions will reinstantiate as well, even those that handle a different state variable than the one that changed. Although this might not be a big deal in a smaller component, it can cause a performance hit in a more complex component that has multiple state values. If one state value is changed, it should only cause functions that access it to reinstantiate, and leave functions that do not alone, yet this is not the case. In the example code below, updating the value of the "count1" state will cause a re-render that recreates <strong>all</strong> functions in the component, including <strong>both</strong> functions that don't even concern count1. The incrementCount2 and decrementCount2 functions are for count2 only, but are recreated anyway when count1 is updated.</p>
+          <p>To understand the <strong>useCallback</strong> React hook, it helps to first understand the problem it is intended to solve.</p>
+          <p>When we have a child component that needs to re-render often, <strong>all</strong> its functions will also reinstantiate every time, even those that handle a different state variable than the one that changed. Although this might not be a big deal in a smaller component, it can cause a performance hit in a more complex component that has multiple state values.</p>
+          <p>If one state value is changed, it should only cause functions that <strong>access it</strong> to be reinstantiated again, and leave functions that do not alone. This is not the case by default, however!</p>
+          <p>For example, in the code below, updating the value of the "count1" state will cause a re-render that recreates <strong>all</strong> functions in the component, including <strong>both</strong> functions that don't even concern "count1". The incrementCount2 and decrementCount2 functions are for "count2" only, <strong>but are recreated anyway</strong> when "count1" is updated.</p>
           <div class="codecontainer">
             <pre>
 import React, { useState } from "react";
@@ -637,7 +640,7 @@ const Counter = () =&gt; {
 export default Counter;                
             </pre>
           </div>
-          <p>To solve the problem, and make it so that we don't recreate functions in a re-render that do not concern the state value that was updated, we can use the <strong>useCallback</strong> hook to <strong>memoize</strong> a function's callback so it only changes if one of its inputs changes (Noring, n.d.).</p>
+          <p>To solve the problem, we can make it so that we don't recreate functions in a re-render that do not concern the state value that was updated. That is, we can use the useCallback hook to <strong>memoize</strong> a function's callback so it only changes if one of its own corresponding inputs changes (Noring, n.d.).</p>
           <p>All we need to do is wrap each of the functions with a useCallback that has an array for its second parameter that includes any state values that should cause the function to be recreated when the component re-renders.</p>
           <div class="codecontainer">
               <pre>
@@ -684,7 +687,7 @@ const Counter = () =&gt; {
 export default Counter;
               </pre>
             </div>
-            <p>Now, with each call wrapped in useCallback, the functions will only be reinstantiated when the state values specified in the second parameter array are changed, thus optimizing performance.</p>
+            <p>Now, with each call wrapped in a useCallback hook, the functions will only be reinstantiated when the state values specified in the second parameter array are changed, thus optimizing performance!</p>
         </section>
         <section class="main-section" id="useMemo">
           <header>useMemo</header>
