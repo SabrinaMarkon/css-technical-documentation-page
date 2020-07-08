@@ -700,7 +700,7 @@ export default Counter;
             </code>
           </div>
           <p>Above, if either dependency, a or b, changes, we have to re-calculate the value of "memoizedValue" with the computeExpensiveValue function. Otherwise, if neither a nor b changes, we can use "memoizedValue" without computing it. The first time it is computed is when a component is first mounted, and it should not include side effects, since those should be in the useEffect hook instead. The useMemo and useEFfect hooks have similar code with an array as the second parameter, but useEffect is for side effects, whereas useMemo is for memoized values.</p>
-          <p>*Importantly, if the array is left out like the below code, the value will never be memoized, because there are no dependencies saying that it shouldn't be recalculated. That is, the value would be recalculated every time the component re-renders if there are no parameters in the array.</p>
+          <p><strong>Importantly</strong>, if the array is left out like the below code, the value will never be memoized, because there are no dependencies saying that it shouldn't be recalculated. That is, the value would be recalculated every time the component re-renders if there are no parameters in the array.</p>
           <div class="codecontainer">
               <code>
                   const memoizedValue = useMemo(() => computeExpensiveValue(a, b));
@@ -717,8 +717,8 @@ export default Counter;
         </section>
         <section class="main-section" id="useImperativeHandle">
           <header>useImperativeHandle</header>
-          <p>While the <strong>useImperativeHandle</strong> hook is not used often, it is available if we run across a situation where a child component's ref needs to be passed to its parent component to use. For example, a parent component may need to control focusing on an input that lives in a child component, or control scrolling in a child component. The useImperativeHandle hook needs to be used with <strong>forwardRef</strong>. In fact, useImperativeHandle behaves much like useRef, in that it allows you to interact with a particular DOM element directly.</p>
-          <p>Unlike useRef, however, which returns the instance element of the DOM node, useImperativeHandle allows you to control what value is returned instead of the instance element itself. Moreover, it allows you to define new functions to replace native functions, such as focus() or blur().</p>
+          <p>While the <strong>useImperativeHandle</strong> hook is not used often, it is available if we run across a situation where a child component's ref needs to be passed <strong>to its parent component</strong> to use. For example, a parent component may need to control focusing on an input that lives in a child component, or to control scrolling in a child component. The useImperativeHandle hook needs to be use in combination with <strong>forwardRef</strong>. In fact, useImperativeHandle behaves much like the <strong>useRef</strong> hook, in that it allows you to interact with a particular DOM element directly.</p>
+          <p>Unlike useRef, however, which returns the <strong>instance element</strong> of the DOM node, useImperativeHandle allows you to control <strong>what value</strong> is returned, rather than simply the instance variable itself. Moreover, it allows us to define new functions to replace native functions, such as focus() or blur().</p>
           <div class="codecontainer">
             <code>
                 useImperativeHandle(ref, createHandle, [deps]);

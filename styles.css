@@ -50,9 +50,6 @@ a.nav-link {
   border-radius: 10px;
   border: 1px solid #393939;
 }
-xmp {
-  overflow: auto;
-}
 footer {
   display: flex;
   flex-direction: column;
@@ -71,7 +68,7 @@ footer > header {
     flex-direction: column;
   }
   header {
-    font-size: 1.2em;
+    font-size: 1.4em;
   }
   #navbar {
     width: 100%;
