@@ -827,14 +827,9 @@ ReactDOM.render(<NoFlicker />, document.querySelector("#root"));
         </section>
         <section class="main-section" id="useDebugValue">
           <header>useDebugValue</header>
-          <p>The <strong>useDebugValue</strong> is a hook that is simply meant to make debugging custom hooks easier by giving them custom names that show in the React DevTools browser extension. 
-            That way, when an error occurs we can see the custom name in the DevTools stack trace, which makes it far easier to find the problem in our code.</p>
-          <p>The useDebugValue hook is <strong>only</strong> executed when both the React DevTools extension is open in the browser, and the custom hook related to the useDebugValue 
-            is being inspected by the developer. Because the function passed to useDebugValue does not run except under these circumstances, the function has no performance impact when
-            the application is running normally. Nevertheless, the React documentation advises to use the useDebugValue hook sparingly, rather than for every custom hook. It is best used 
-            when custom hooks are part of a shared library.</p>
-          <p>The below code is a React custom hook called useLoginStatus. The function computed in the useDebugValue hook will reveal during debugging whether or not the state of 
-            the user was online when the error happened.</p>
+          <p>The <strong>useDebugValue</strong> React hook is meant to make debugging custom hooks easier by giving them our own custom names. When an error occurs we can see the custom name in the React DevTools stacka trace, which makes it far easier to find the problem in our code.</p>
+          <p>The useDebugValue hook is <strong>only</strong> executed when both the React DevTools extension is open in the browser, <strong>and</strong> the custom hook related to the useDebugValue is being inspected by the developer. Because the function passed to useDebugValue does not run except under these circumstances, the function has <strong>no performance impact</strong> when the application is running normally. Nevertheless, the React documentation advises to use the useDebugValue hook sparingly, rather than for every custom hook. It is best used when custom hooks are part of a shared library, for instance.</p>
+          <p>The below code is a React custom hook called useLoginStatus. The function computed in the useDebugValue hook will reveal during debugging whether or not the state of the user was online when the error happened.</p>
           <div class="codecontainer">
             <pre>
 import React, { useState, useDebugValue } from 'react';
